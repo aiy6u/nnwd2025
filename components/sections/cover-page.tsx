@@ -4,72 +4,87 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Heart } from "lucide-react"
 
-// Định nghĩa kiểu dữ liệu cho cặp xưng hô
 interface AddressingPair {
-    self: string;
-    other: string;
+    self: string
+    other: string
 }
 
-const ADDRESSING_KEY = "wedding-addressing-pair";
+const ADDRESSING_KEY = "wedding-addressing-pair"
+const WEDDING_DATE = "06 Tháng 11, 2025"
+const WEDDING_DAY_DETAIL = "Thứ 5, ngày 06 tháng 11 năm 2025"
+const WEDDING_LUNAR_DATE = "Nhằm ngày 19 tháng 9 âm lịch"
 
 export default function CoverPage() {
-    // State để lưu cách xưng hô bản thân (self)
-    // Đặt giá trị mặc định là "Chúng tôi" hoặc một từ chung nào đó
-    const [addressingSelf, setAddressingSelf] = useState<string>("Chúng tôi"); 
+    const [addressingSelf, setAddressingSelf] = useState<string>("Chúng tôi")
 
     useEffect(() => {
-        const storedPair = localStorage.getItem(ADDRESSING_KEY);
-        if (storedPair) {
-            try {
-                const parsedPair: AddressingPair = JSON.parse(storedPair);
-                // Lấy giá trị 'self' (Xưng hô bản thân) để hiển thị trên trang bìa
-                if (parsedPair.self) {
-                    setAddressingSelf(parsedPair.self);
+        const loadAddressing = () => {
+            const storedPair = localStorage.getItem(ADDRESSING_KEY)
+            if (storedPair) {
+                try {
+                    const parsedPair: AddressingPair = JSON.parse(storedPair)
+                    if (parsedPair.self) {
+                        setAddressingSelf(parsedPair.self)
+                    }
+                } catch (e) {
                 }
-            } catch (e) {
-                // Giữ nguyên giá trị mặc định nếu parsing lỗi
             }
         }
+
+        loadAddressing()
+
+        window.addEventListener("addressing-updated", loadAddressing)
+        return () => window.removeEventListener("addressing-updated", loadAddressing)
     }, [])
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
+        <div className="flex min-h-full md:min-h-screen flex-col items-center justify-center px-6 text-center md:px-12">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
-                className="space-y-8"
+                className="space-y-8 md:space-y-12"
             >
-                {/* Decorative element */}
                 <motion.div
                     animate={{ rotate: [0, 5, -5, 0] }}
                     transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
                     className="mx-auto"
                 >
-                    <Heart className="h-16 w-16 fill-primary text-primary" />
+                    <Heart className="h-12 w-12 fill-primary text-primary md:h-20 md:w-20" />
                 </motion.div>
 
-                {/* Couple names */}
-                <div className="space-y-4">
-                    <h1 className="font-script text-5xl text-primary sm:text-6xl md:text-7xl">Nghĩa</h1>
-                    <div className="flex items-center justify-center gap-4">
-                        <div className="h-px w-12 bg-primary/30" />
-                        <Heart className="h-6 w-6 fill-primary text-primary" />
-                        <div className="h-px w-12 bg-primary/30" />
+                <div className="space-y-4 md:space-y-6">
+                    <h1 className="font-script text-5xl text-primary sm:text-6xl md:text-8xl lg:text-9xl">Nghĩa</h1>
+                    <div className="flex items-center justify-center gap-4 md:gap-8">
+                        <div className="h-px w-12 bg-primary/30 md:w-24" />
+                        <Heart className="h-6 w-6 fill-primary text-primary md:h-8 md:w-8" />
+                        <div className="h-px w-12 bg-primary/30 md:w-24" />
                     </div>
-                    <h1 className="font-script text-5xl text-primary sm:text-6xl md:text-7xl">Nhung</h1>
+                    <h1 className="font-script text-5xl text-primary sm:text-6xl md:text-8xl lg:text-9xl">Nhung</h1>
                 </div>
 
-                {/* Full names */}
                 <div className="space-y-2 text-foreground/80">
-                    <p className="font-serif text-lg">Nguyễn Trọng Nghĩa</p>
-                    <p className="font-serif text-lg">Văn Thị Nhung</p>
+                    <p className="font-serif text-base md:text-xl lg:text-2xl">Nguyễn Trọng Nghĩa</p>
+                    <p className="font-serif text-base md:text-xl lg:text-2xl">Văn Thị Nhung</p>
                 </div>
 
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }} className="space-y-2">
-                    {/* Đã cập nhật để sử dụng addressingSelf */}
-                    <p className="font-serif text-sm uppercase tracking-widest text-muted-foreground">{addressingSelf} Sắp Kết Hôn</p>
-                    <p className="font-serif text-2xl font-semibold text-foreground">23 Tháng 11, 2025</p>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1 }}
+                    className="space-y-2 md:space-y-3"
+                >
+                    <p className="font-serif text-xs uppercase tracking-widest text-muted-foreground md:text-sm">
+                        {addressingSelf} Sắp Kết Hôn
+                    </p>
+                    {/* Hiển thị Thứ và Ngày Dương */}
+                    <p className="font-serif text-xl font-semibold text-foreground md:text-3xl lg:text-4xl">
+                        {WEDDING_DAY_DETAIL}
+                    </p>
+                    {/* Hiển thị Ngày Âm Lịch */}
+                    <p className="font-serif text-base font-medium text-foreground/80 md:text-xl">
+                        {WEDDING_LUNAR_DATE}
+                    </p>
                 </motion.div>
             </motion.div>
         </div>

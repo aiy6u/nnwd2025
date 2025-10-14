@@ -15,7 +15,7 @@ interface MessagesProps {
 
 export default function Messages({ messages = [] }: MessagesProps) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-start px-6 py-20">
+    <div className="flex min-h-full md:min-h-screen flex-col items-center justify-start px-6 py-20">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-2xl space-y-8">
         <div className="space-y-4 text-center">
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", delay: 0.2 }}>

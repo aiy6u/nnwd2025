@@ -6,10 +6,10 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface AddressingPair {
-  self: string;
-  other: string;
+  self: string
+  other: string
 }
-const ADDRESSING_KEY = "wedding-addressing-pair";
+const ADDRESSING_KEY = "wedding-addressing-pair"
 
 const photos = [
   {
@@ -40,19 +40,25 @@ const photos = [
 
 export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
-  const [selfAddressing, setSelfAddressing] = useState("Chúng tôi");
+  const [selfAddressing, setSelfAddressing] = useState("Chúng tôi")
 
   useEffect(() => {
-    const storedPair = localStorage.getItem(ADDRESSING_KEY);
-    if (storedPair) {
-      try {
-        const parsedPair: AddressingPair = JSON.parse(storedPair);
-        if (parsedPair.self) {
-          setSelfAddressing(parsedPair.self);
-        }
-      } catch (e) {
+    const loadAddressing = () => {
+      const storedPair = localStorage.getItem(ADDRESSING_KEY)
+      if (storedPair) {
+        try {
+          const parsedPair: AddressingPair = JSON.parse(storedPair)
+          if (parsedPair.self) {
+            setSelfAddressing(parsedPair.self)
+          }
+        } catch (e) { }
       }
     }
+
+    loadAddressing()
+    window.addEventListener("addressing-updated", loadAddressing)
+
+    return () => window.removeEventListener("addressing-updated", loadAddressing)
   }, [])
 
   const navigate = (direction: number) => {
@@ -62,19 +68,20 @@ export default function Gallery() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-6 py-20">
+    <div className="flex min-h-full md:min-h-screen flex-col items-center justify-center px-6 py-20 md:px-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-5xl space-y-12"
+        className="w-full max-w-6xl space-y-12"
       >
         <div className="space-y-4 text-center">
-          {/* Sử dụng selfAddressing đã lấy từ localStorage */}
-          <h2 className="font-script text-5xl text-primary">Khoảnh Khắc Của {selfAddressing}</h2>
-          <p className="font-serif text-sm text-muted-foreground">Our Gallery</p>
+          <h2 className="font-script text-4xl text-primary md:text-6xl lg:text-7xl">
+            Khoảnh Khắc Của {selfAddressing}
+          </h2>
+          <p className="font-serif text-xs text-muted-foreground md:text-sm">Our Gallery</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-6">
           {photos.map((photo, index) => (
             <motion.button
               key={index}
@@ -82,7 +89,7 @@ export default function Gallery() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
               onClick={() => setSelectedImage(index)}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl bg-muted shadow-lg transition-transform hover:scale-105"
+              className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-muted shadow-lg transition-transform hover:scale-105 md:rounded-2xl"
             >
               <img src={photo.url || "/placeholder.svg"} alt={photo.alt} className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/10" />
@@ -97,28 +104,28 @@ export default function Gallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/95 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/95 p-4 md:p-8"
             onClick={() => setSelectedImage(null)}
           >
             <Button
               size="icon"
               variant="ghost"
-              className="absolute right-4 top-4 text-background hover:bg-background/10"
+              className="absolute right-4 top-4 text-background hover:bg-background/10 md:right-8 md:top-8"
               onClick={() => setSelectedImage(null)}
             >
-              <X className="h-6 w-6" />
+              <X className="h-6 w-6 md:h-8 md:w-8" />
             </Button>
 
             <Button
               size="icon"
               variant="ghost"
-              className="absolute left-4 text-background hover:bg-background/10"
+              className="absolute left-4 text-background hover:bg-background/10 md:left-8 md:h-16 md:w-16"
               onClick={(e) => {
                 e.stopPropagation()
                 navigate(-1)
               }}
             >
-              <ChevronLeft className="h-8 w-8" />
+              <ChevronLeft className="h-8 w-8 md:h-12 md:w-12" />
             </Button>
 
             <motion.img
@@ -128,20 +135,20 @@ export default function Gallery() {
               exit={{ scale: 0.8, opacity: 0 }}
               src={photos[selectedImage].url}
               alt={photos[selectedImage].alt}
-              className="max-h-[90vh] max-w-full rounded-2xl object-contain"
+              className="max-h-[85vh] max-w-full rounded-xl object-contain md:max-h-[90vh] md:rounded-2xl"
               onClick={(e) => e.stopPropagation()}
             />
 
             <Button
               size="icon"
               variant="ghost"
-              className="absolute right-4 text-background hover:bg-background/10"
+              className="absolute right-4 text-background hover:bg-background/10 md:right-8 md:h-16 md:w-16"
               onClick={(e) => {
                 e.stopPropagation()
                 navigate(1)
               }}
             >
-              <ChevronRight className="h-8 w-8" />
+              <ChevronRight className="h-8 w-8 md:h-12 md:w-12" />
             </Button>
           </motion.div>
         )}

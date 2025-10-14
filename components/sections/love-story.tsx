@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { Heart, Sparkles, Syringe as Ring } from "lucide-react"
+import { Gem, HandHeart, Heart, Route, Sparkles } from "lucide-react"
 
 interface AddressingPair {
     self: string;
@@ -17,18 +17,25 @@ export default function LoveStory() {
     });
 
     useEffect(() => {
-        const storedPair = localStorage.getItem(ADDRESSING_KEY);
-        if (storedPair) {
-            try {
-                const parsedPair: AddressingPair = JSON.parse(storedPair);
-                if (parsedPair.self && parsedPair.other) {
-                    setAddressingPair(parsedPair);
+        const loadAddressing = () => {
+            const storedPair = localStorage.getItem(ADDRESSING_KEY);
+            if (storedPair) {
+                try {
+                    const parsedPair: AddressingPair = JSON.parse(storedPair);
+                    if (parsedPair.self && parsedPair.other) {
+                        setAddressingPair(parsedPair);
+                    }
+                } catch (e) {
                 }
-            } catch (e) {
             }
         }
+
+        loadAddressing();
+        window.addEventListener("addressing-updated", loadAddressing);
+
+        return () => window.removeEventListener("addressing-updated", loadAddressing);
     }, [])
-    
+
     const selfAddressing = addressingPair.self;
     const otherAddressing = addressingPair.other;
 
@@ -46,19 +53,19 @@ export default function LoveStory() {
             description: `Bờ biển Nha Trang chứng kiến khởi đầu tuyệt đẹp cho câu chuyện tình yêu của ${selfAddressing}.`,
         },
         {
-            icon: Sparkles,
+            icon: Route,
             title: "Hành Trình Yêu Thương",
             date: "2020 - 2025",
             description: `Những kỷ niệm khó quên cùng bao thăng trầm sóng gió, nơi ${selfAddressing} yêu thương và trưởng thành.`,
         },
         {
-            icon: Ring, // Syringe as Ring
+            icon: HandHeart,
             title: "Lời Cầu Hôn",
             date: "Ngày 5/10/2025",
             description: `Anh hỏi, em đồng ý! ${selfAddressing} chuẩn bị bước sang một chương mới của cuộc đời.`,
         },
         {
-            icon: Heart,
+            icon: Gem,
             title: "Trang Mới",
             date: "Hiện Tại",
             description: `Và hiện tại, câu chuyện của ${selfAddressing} càng thêm ý nghĩa với sự góp mặt của ${otherAddressing}.`,
@@ -66,7 +73,7 @@ export default function LoveStory() {
     ]
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center px-6 py-20">
+        <div className="flex min-h-full md:min-h-screen flex-col items-center justify-center px-6 py-20">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -88,9 +95,8 @@ export default function LoveStory() {
                                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: index * 0.2 }}
-                                className={`relative flex items-center gap-8 ${
-                                    index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
-                                }`}
+                                className={`relative flex items-center gap-8 ${index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
+                                    }`}
                             >
                                 <div className="absolute left-8 z-10 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full bg-primary shadow-lg sm:left-1/2">
                                     <Icon className="h-8 w-8 text-primary-foreground" />

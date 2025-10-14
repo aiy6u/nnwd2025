@@ -17,8 +17,8 @@ export default function FloatingHearts() {
     const newHearts = Array.from({ length: 12 }, (_, i) => ({
       id: i,
       left: `${10 + Math.random() * 80}%`, // Keep within 10-90% to stay in frame
-      animationDuration: `${12 + Math.random() * 10}s`,
-      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${12 + Math.random() * 2}s`,
+      animationDelay: `${Math.random() * 6}s`,
       size: 12 + Math.random() * 16,
     }))
     setHearts(newHearts)
