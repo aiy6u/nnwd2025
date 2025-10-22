@@ -17,7 +17,7 @@ export default function MusicPlayer() {
   const [isToggling, setIsToggling] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  const loadMusicPreference = () => {
+  const isMusicOn = () => {
     const storedPref = localStorage.getItem(MUSIC_PREF_KEY) || DEFAULT_MUSIC_PREF
     setUserPrefersMusic(storedPref)
     return storedPref === "true"
@@ -28,7 +28,7 @@ export default function MusicPlayer() {
     if (!audio) return
 
     const tryPlay = () => {
-      if (audioAvailable && userPrefersMusic === "true") {
+      if (audioAvailable && isMusicOn()) {
         audio.play().then(() => {
           setIsPlaying(true)
         }).catch(() => {
@@ -54,7 +54,7 @@ export default function MusicPlayer() {
     audio.addEventListener("canplay", handleCanPlay);
     audio.addEventListener("error", handleError);
 
-    const musicIsOn = loadMusicPreference();
+    const musicIsOn = isMusicOn();
     if (musicIsOn) {
       audio.load();
     } else {
