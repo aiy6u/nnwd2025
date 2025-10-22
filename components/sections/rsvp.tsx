@@ -26,7 +26,7 @@ export default function RSVP() {
   const [step, setStep] = useState<Step>("form")
   const [formData, setFormData] = useState({
     name: "",
-    phone: "",
+    phone: "", // Đã thay email bằng phone
     locations: [] as string[],
     message: "",
   })
@@ -71,7 +71,10 @@ export default function RSVP() {
     }
   }
 
-  // HÀM handleInputChange ĐÃ BỊ LOẠI BỎ
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target
+    setFormData((prev) => ({ ...prev, [id]: value }))
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -192,8 +195,7 @@ export default function RSVP() {
             <Input
               id="name"
               value={formData.name}
-              // THAY THẾ handleInputChange
-              onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+              onChange={handleInputChange}
               required
               className="border-border bg-background"
               placeholder={'Nhập tên ' + otherAddressing.toLocaleLowerCase()}
@@ -209,8 +211,7 @@ export default function RSVP() {
               id="phone"
               type="tel" // Dùng type="tel" cho mobile
               value={formData.phone}
-              // THAY THẾ handleInputChange
-              onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
+              onChange={handleInputChange}
               className="border-border bg-background"
               placeholder="09xx xxx xxx"
             />
@@ -229,7 +230,7 @@ export default function RSVP() {
                   <Label htmlFor="nha-gai" className="font-normal leading-none cursor-pointer">
                     Lễ Vu Quy - Nhà Gái
                   </Label>
-                  <p className="text-xs text-muted-foreground">10h00 - Thứ 5, 06/11/2025</p>
+                  <p className="text-xs text-muted-foreground">Thứ 5, 06/11/2025</p>
                 </div>
               </div>
 
@@ -243,7 +244,7 @@ export default function RSVP() {
                   <Label htmlFor="nha-trai" className="font-normal leading-none cursor-pointer">
                     Lễ Thành Hôn - Nhà Trai
                   </Label>
-                  <p className="text-xs text-muted-foreground">10h00 - Thứ 3, 11/11/2025</p>
+                  <p className="text-xs text-muted-foreground">Thứ 3, 11/11/2025</p>
                 </div>
               </div>
 
@@ -259,7 +260,7 @@ export default function RSVP() {
                     <Label htmlFor="da-nang" className="font-normal leading-none cursor-pointer">
                       Tiệc Báo Hỉ - Đà Nẵng
                     </Label>
-                    <p className="text-xs text-muted-foreground">18h00 - Thứ 7, 15/11/2025</p>
+                    <p className="text-xs text-muted-foreground">Thứ 7, 15/11/2025</p>
                   </div>
                 </div>
               )}
@@ -279,8 +280,7 @@ export default function RSVP() {
             <Textarea
               id="message"
               value={formData.message}
-              // THAY THẾ handleInputChange
-              onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
+              onChange={handleInputChange}
               rows={4}
               className="border-border bg-background"
               placeholder={`Gửi lời chúc của ${otherAddressing} tới ${selfAddressing}...`}

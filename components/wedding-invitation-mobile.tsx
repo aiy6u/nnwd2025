@@ -39,11 +39,11 @@ export default function WeddingInvitationMobile() {
     }
 
     updatePageHeight()
-    window.addEventListener("resize", updatePageHeight)
+    // window.addEventListener("resize", updatePageHeight)
     window.addEventListener("orientationchange", updatePageHeight)
 
     return () => {
-      window.removeEventListener("resize", updatePageHeight)
+      // window.removeEventListener("resize", updatePageHeight)
       window.removeEventListener("orientationchange", updatePageHeight)
     }
   }, [])
@@ -156,13 +156,14 @@ export default function WeddingInvitationMobile() {
             return (
               <div key={section.id} className={cn("page min-h-full bg-background overflow-y-auto")}>
                 {section.id === "messages" ? <Component messages={messages} /> : <Component />}
-                <FloatingHearts />
-                <FloatingHearts />
-                <FloatingHearts />
+
               </div>
             )
           })}
         </HTMLFlipBook>
+        <FloatingHearts />
+        <FloatingHearts />
+        <FloatingHearts />
       </div>
 
       <div
