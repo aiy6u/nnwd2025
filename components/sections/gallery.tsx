@@ -6,7 +6,7 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useIsMobile } from "@/hooks/use-mobile"
-import Image from "next/image"
+import Image, { ImageProps } from "next/image"
 
 interface AddressingPair {
   self: string
@@ -14,7 +14,14 @@ interface AddressingPair {
 }
 const ADDRESSING_KEY = "wedding-addressing-pair"
 
-const photos = [
+interface Photo {
+  url: ImageProps['src']
+  alt: string
+  width: number
+  height: number
+}
+
+const photos: Photo[] = [
   {
     url: "/gallery/DSC00327.jpg",
     alt: "Cô dâu chú rể rạng rỡ hạnh phúc trong tà áo dài đỏ truyền thống!",
@@ -89,10 +96,48 @@ const photos = [
   },
 ]
 
+const GalleryThumbnail: React.FC<{ photo: Photo, index: number, onClick: () => void }> = ({ photo, index, onClick }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <motion.button
+      key={index}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: index * 0.1 }}
+      onClick={onClick}
+      className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-muted shadow-lg transition-transform hover:scale-105 md:rounded-2xl"
+    >
+      <div
+        className={cn(
+          "absolute inset-0 skeleton transition-opacity duration-500",
+          isLoaded ? "opacity-0" : "opacity-100"
+        )}
+      />
+      <Image
+        src={photo.url}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+        className={cn(
+          "h-full w-full object-cover absolute inset-0 transition-opacity duration-500",
+          isLoaded ? "opacity-100" : "opacity-0"
+        )}
+        loading="lazy"
+        onLoad={() => setIsLoaded(true)}
+        onError={() => setIsLoaded(true)}
+      />
+      <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/10" />
+    </motion.button>
+  )
+}
+
 export default function Gallery() {
   const isMobile = useIsMobile()
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [selfAddressing, setSelfAddressing] = useState("Chúng tôi")
+  const [imageLoaded, setImageLoaded] = useState(false)
 
   useEffect(() => {
     const loadAddressing = () => {
@@ -117,9 +162,15 @@ export default function Gallery() {
     if (selectedImage === null) return
     const newIndex = (selectedImage + direction + photos.length) % photos.length
     setSelectedImage(newIndex)
+    setImageLoaded(false)
   }
 
   const currentPhoto = selectedImage !== null ? photos[selectedImage] : null
+
+  const closeGallery = () => {
+    setSelectedImage(null)
+    setImageLoaded(false)
+  }
 
   return (
     <div className="flex min-h-full md:min-h-screen flex-col items-center justify-center px-6 py-20 md:px-12">
@@ -138,25 +189,12 @@ export default function Gallery() {
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-6">
           {photos.map((photo, index) => (
-            <motion.button
+            <GalleryThumbnail
               key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1 }}
+              photo={photo}
+              index={index}
               onClick={() => setSelectedImage(index)}
-              className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-muted shadow-lg transition-transform hover:scale-105 md:rounded-2xl"
-            >
-              <Image
-                src={photo.url}
-                alt={photo.alt}
-                width={photo.width}
-                height={photo.height}
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                className="h-full w-full object-cover absolute inset-0"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/10" />
-            </motion.button>
+            />
           ))}
         </div>
       </motion.div>
@@ -168,44 +206,56 @@ export default function Gallery() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/95 p-4 md:p-8"
-            onClick={() => setSelectedImage(null)}
+            onClick={closeGallery}
           >
-            <Button
-              size="icon"
-              variant="ghost"
-              className="absolute right-4 top-4 text-background hover:bg-background/10 md:right-8 md:top-8"
-              onClick={() => setSelectedImage(null)}
-            >
-              <X className="h-6 w-6 md:h-8 md:w-8" />
-            </Button>
-
-
-
             <motion.div
               key={selectedImage}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
-              // Giữ lại các lớp làm tròn góc
-              className="relative w-full h-full max-h-[85vh] max-w-full overflow-hidden md:max-h-[90vh] content-center justify-items-center"
-              onClick={(e) => e.stopPropagation()}
+              className="relative w-full h-full max-h-[85vh] max-w-full overflow-hidden flex items-center justify-center md:max-h-[90vh]"
+              onClick={(e) => { e.stopPropagation(); closeGallery(); }}
             >
-              {/* Image fill sẽ lấp đầy container có góc tròn */}
+              <div
+                className={cn(
+                  "absolute inset-0 flex items-center justify-center rounded-xl md:rounded-2xl transition-opacity duration-300 p-2",
+                  imageLoaded ? "opacity-0" : "opacity-100",
+                )}
+              >
+                <div
+                  className="w-3/6 h-full rounded-xl md:rounded-2xl skeleton content-center justify-items-center"
+                  style={{
+                    aspectRatio: `${currentPhoto.width} / ${currentPhoto.height}`,
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                  }}
+                  onClick={(e) => { e.stopPropagation(); }}
+                >
+                  <Image className="animate-bounce" width={256} height={256} src={'/tiger_hi.png'} alt={"1998 hihi"} priority={true} />
+                </div>
+              </div>
+
               <Image
                 src={currentPhoto.url}
-                className={cn("rounded-xl md:rounded-2xl max-h-full max-w-full w-fit h-fit object-contain", !isMobile ? "" : "")}
+                className={cn(
+                  "rounded-xl md:rounded-2xl object-contain transition-opacity duration-300",
+                  imageLoaded ? "opacity-100" : "opacity-0",
+                  "max-w-full max-h-full w-auto h-auto"
+                )}
                 alt={currentPhoto.alt}
                 width={currentPhoto.width}
                 height={currentPhoto.height}
                 priority={true}
+                onClick={(e) => { e.stopPropagation(); }}
+                onLoad={() => setImageLoaded(true)}
+                onError={() => setImageLoaded(true)}
               />
             </motion.div>
 
-            {/* Đảm bảo nút Prev có border tròn và hiệu ứng */}
             <Button
               size="icon"
               variant="ghost"
-              className="absolute left-4 text-background hover:bg-background/10 md:left-8 md:h-16 md:w-16 border border-pink-800 rounded-full animate-pulse bg-pink-500/50 z-0"
+              className="absolute left-4 text-background hover:bg-background/10 md:left-8 md:h-16 md:w-16 border border-pink-800 rounded-full animate-pulse bg-pink-500/50 z-10"
               onClick={(e) => {
                 e.stopPropagation()
                 navigate(-1)
@@ -214,11 +264,10 @@ export default function Gallery() {
               <ChevronLeft className="h-8 w-8 md:h-12 md:w-12" />
             </Button>
 
-            {/* Đảm bảo nút Next có border tròn và hiệu ứng */}
             <Button
               size="icon"
               variant="ghost"
-              className="absolute right-4 text-background hover:bg-background/10 md:right-8 md:h-16 md:w-16 border border-pink-800 rounded-full animate-pulse bg-pink-500/50"
+              className="absolute right-4 text-background hover:bg-background/10 md:right-8 md:h-16 md:w-16 border border-pink-800 rounded-full animate-pulse bg-pink-500/50 z-10"
               onClick={(e) => {
                 e.stopPropagation()
                 navigate(1)
