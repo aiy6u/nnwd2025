@@ -153,7 +153,7 @@ export default function Gallery() {
                 height={photo.height}
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 className="h-full w-full object-cover absolute inset-0"
-                priority={index < 4}
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/10" />
             </motion.button>
