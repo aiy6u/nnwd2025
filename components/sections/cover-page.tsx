@@ -12,7 +12,7 @@ interface AddressingPair {
 const ADDRESSING_KEY = "wedding-addressing-pair"
 const WEDDING_DATE = "06 Tháng 11, 2025"
 const WEDDING_DAY_DETAIL = "Thứ 5, ngày 06 tháng 11 năm 2025"
-const WEDDING_LUNAR_DATE = "Nhằm ngày 19 tháng 9 âm lịch"
+const WEDDING_LUNAR_DATE = "Nhằm ngày 17 tháng 9 âm lịch"
 
 export default function CoverPage() {
     const [addressingSelf, setAddressingSelf] = useState<string>("Chúng tôi")

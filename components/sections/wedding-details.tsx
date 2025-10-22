@@ -76,7 +76,7 @@ export default function WeddingDetails() {
                 <Clock className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                 <div>
                   <p className="font-medium text-foreground">Thứ 5, 06 Tháng 11, 2025</p>
-                  <p className="text-muted-foreground">Nhằm ngày 19 tháng 9 Âm lịch</p>
+                  <p className="text-muted-foreground">Nhằm ngày 17 tháng 9 Âm lịch</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -124,7 +124,7 @@ export default function WeddingDetails() {
                 <MapPin className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                 <div className="flex-1">
                   <p className="font-medium text-foreground">Trung tâm tiệc cưới Nhà Hàng 464</p>
-                  <p className="text-muted-foreground">Trường Xuân, Tuy An Bắc, tỉnh Đắk Lắk</p>
+                  <p className="text-muted-foreground line-clamp-2">KP. Trường Xuân, Xã Tuy An Bắc, tỉnh Đắk Lắk</p>
                 </div>
               </div>
               <Button

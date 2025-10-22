@@ -31,7 +31,7 @@ const ADDRESSING_KEY = "wedding-addressing-pair"
 const ELEGANT_STYLE = "font-script text-primary text-2xl drop-shadow-sm shadow-dark"
 
 // Dữ liệu đã lưu:
-// Nhà gái: Thứ 5 ngày 6 tháng 11 năm 2025 (Nhằm ngày 19 tháng 9 âm lịch)
+// Nhà gái: Thứ 5 ngày 6 tháng 11 năm 2025 (Nhằm ngày 17 tháng 9 âm lịch)
 // Nhà Trai: Thứ 3, ngày 11 tháng 11 năm 2025 (Nhằm ngày 22, tháng 9 âm lịch)
 
 // Giả định thời gian tổ chức: Nhà gái 11:00 AM, Nhà trai 11:00 AM (giờ nhập tiệc)
@@ -66,7 +66,7 @@ export default function Countdown() {
       title: "LỄ VU QUY - NHÀ GÁI",
       date: new Date(EVENT_GIRL_DATE),
       dateString: "Thứ 5, 06 Tháng 11, 2025",
-      lunarDate: "(19/09 ÂL)",
+      lunarDate: "(17/09 ÂL)",
       location: "Sầm Sơn, Thanh Hóa",
       time: "10:00 Sáng",
       timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },

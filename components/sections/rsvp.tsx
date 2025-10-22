@@ -175,7 +175,7 @@ export default function RSVP() {
       >
         <div className="space-y-4 text-center">
           <h2 className="font-script text-5xl text-primary">Xác Nhận Tham Dự</h2>
-          <p className="font-serif text-sm text-muted-foreground">Phản hồi</p>
+          <p className="font-serif text-sm text-muted-foreground">RSVP</p>
           <p className="text-balance font-serif text-base leading-relaxed text-foreground/80">
             Vui lòng cho {selfAddressing} biết {otherAddressing} có thể tham dự không
           </p>
@@ -198,7 +198,7 @@ export default function RSVP() {
               onChange={handleInputChange}
               required
               className="border-border bg-background"
-              placeholder="Nhập tên..."
+              placeholder={'Nhập tên ' + otherAddressing.toLocaleLowerCase()}
             />
           </div>
 
@@ -283,7 +283,7 @@ export default function RSVP() {
               onChange={handleInputChange}
               rows={4}
               className="border-border bg-background"
-              placeholder={`Gửi lời chúc của ${selfAddressing} tới ${otherAddressing}...`}
+              placeholder={`Gửi lời chúc của ${otherAddressing} tới ${selfAddressing}...`}
             />
           </div>
 

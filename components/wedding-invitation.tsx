@@ -228,7 +228,7 @@ export default function WeddingInvitation() {
           return (
             <div
               key={section.id}
-              className="section h-screen bg-background overflow-y-auto"
+              className="section h-screen overflow-y-auto"
               style={{ minHeight: '100vh' }}
             >
               {section.id === "messages" ? <Component messages={messages} /> : <Component />}
