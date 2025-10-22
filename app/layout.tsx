@@ -23,7 +23,39 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Nghĩa ❤️ Nhung - Wedding Invitation",
   description: "Join us in celebrating our special day - November 6 & 11, 2025",
-  generator: "v0.app",
+  generator: "NTNSOFT.com",
+  icons: {
+    icon: "/favicon/favicon.ico", // Standard favicon, usually 16x16, 32x32
+    shortcut: "/favicon/favicon-16x16.png", // Optional shortcut icon
+    apple: "/favicon/apple-touch-icon.png", // Recommended size: 180x180
+    other: [
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "32x32",
+        url: "/favicon/favicon-32x32.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        url: "/favicon/favicon-16x16.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "192x192",
+        url: "/favicon/android-chrome-192x192.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "512x512",
+        url: "/favicon/android-chrome-512x512.png",
+      },
+    ],
+  },
+
 }
 
 export default function RootLayout({
