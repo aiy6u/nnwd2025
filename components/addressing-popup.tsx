@@ -147,12 +147,12 @@ export default function AddressingPopup() {
               exit={{ scale: 0.9, opacity: 0 }}
               className="w-full max-w-md rounded-3xl bg-background p-8 shadow-2xl my-auto"
             >
-              <button
+              {/* <button
                 onClick={() => setIsOpen(false)}
                 className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
               >
                 <X className="h-6 w-6" />
-              </button>
+              </button> */}
               <div className="mb-6 text-center">
                 <Heart className="mx-auto mb-4 h-12 w-12 fill-primary text-primary" />
                 <h2 className="mb-2 font-script text-3xl text-primary">Cài Đặt Cá Nhân</h2>
