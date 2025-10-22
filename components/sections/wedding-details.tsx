@@ -75,14 +75,14 @@ export default function WeddingDetails() {
               <div className="flex items-start gap-3">
                 <Clock className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                 <div>
-                  <p className="font-medium text-foreground">Thứ 5, 06 Tháng 11, 2025</p>
+                  <p className="font-serif font-medium text-foreground">10h00 - Thứ 5, 06 Tháng 11, 2025</p>
                   <p className="text-muted-foreground">Nhằm ngày 17 tháng 9 Âm lịch</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                 <div className="flex-1">
-                  <p className="font-medium text-foreground">Nhà hàng Sơn Hà</p>
+                  <p className="font-serif font-medium text-foreground">Nhà hàng Sơn Hà</p>
                   <p className="text-muted-foreground">20 Nguyễn Du, P. Trường Sơn, Sầm Sơn, Thanh Hóa</p>
                 </div>
               </div>
@@ -116,14 +116,14 @@ export default function WeddingDetails() {
               <div className="flex items-start gap-3">
                 <Clock className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                 <div>
-                  <p className="font-medium text-foreground">Thứ 3, 11 Tháng 11, 2025</p>
+                  <p className="font-serif font-medium text-foreground">10h00 - Thứ 3, 11 Tháng 11, 2025</p>
                   <p className="text-muted-foreground">Nhằm ngày 22 tháng 9 Âm lịch</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                 <div className="flex-1">
-                  <p className="font-medium text-foreground">Trung tâm tiệc cưới Nhà Hàng 464</p>
+                  <p className="font-serif font-medium text-foreground">Trung tâm tiệc cưới Nhà Hàng 464</p>
                   <p className="text-muted-foreground line-clamp-2">KP. Trường Xuân, Xã Tuy An Bắc, tỉnh Đắk Lắk</p>
                 </div>
               </div>
@@ -158,14 +158,14 @@ export default function WeddingDetails() {
                   <div className="flex items-start gap-3">
                     <Clock className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                     <div>
-                      <p className="font-medium text-foreground">Thời gian tổ chức</p>
-                      <p className="text-muted-foreground">Thứ 7, ngày 15 tháng 11, 2025</p>
+                      <p className="font-serif font-medium text-foreground">18h00 - Thứ 7, ngày 15 tháng 11, 2025</p>
+                      <p className="text-muted-foreground">Nhằm ngày 26 tháng 9 Âm lịch</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <MapPin className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                     <div className="flex-1">
-                      <p className="font-medium text-foreground">Nhà hàng MỘC MÂY</p>
+                      <p className="font-serif font-medium text-foreground">Nhà hàng MỘC MÂY</p>
                       <p className="text-muted-foreground">Lô 01 A3-5 Khu Biệt Thự Đảo Xanh - Quận Hải Châu - TP Đà Nẵng</p>
                     </div>
                   </div>

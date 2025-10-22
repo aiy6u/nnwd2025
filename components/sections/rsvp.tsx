@@ -230,7 +230,7 @@ export default function RSVP() {
                   <Label htmlFor="nha-gai" className="font-normal leading-none cursor-pointer">
                     Lễ Vu Quy - Nhà Gái
                   </Label>
-                  <p className="text-xs text-muted-foreground">Thứ 5, 06/11/2025</p>
+                  <p className="text-xs text-muted-foreground">10h00 - Thứ 5, 06/11/2025</p>
                 </div>
               </div>
 
@@ -244,7 +244,7 @@ export default function RSVP() {
                   <Label htmlFor="nha-trai" className="font-normal leading-none cursor-pointer">
                     Lễ Thành Hôn - Nhà Trai
                   </Label>
-                  <p className="text-xs text-muted-foreground">Thứ 3, 11/11/2025</p>
+                  <p className="text-xs text-muted-foreground">10h00 - Thứ 3, 11/11/2025</p>
                 </div>
               </div>
 
@@ -260,7 +260,7 @@ export default function RSVP() {
                     <Label htmlFor="da-nang" className="font-normal leading-none cursor-pointer">
                       Tiệc Báo Hỉ - Đà Nẵng
                     </Label>
-                    <p className="text-xs text-muted-foreground">Thứ 7, 15/11/2025</p>
+                    <p className="text-xs text-muted-foreground">18h00 - Thứ 7, 15/11/2025</p>
                   </div>
                 </div>
               )}
