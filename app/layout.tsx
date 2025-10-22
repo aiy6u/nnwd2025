@@ -24,6 +24,28 @@ export const metadata: Metadata = {
   title: "Nghĩa ❤️ Nhung - Wedding Invitation",
   description: "Join us in celebrating our special day - November 6 & 11, 2025",
   generator: "NTNSOFT.com",
+  openGraph: {
+    title: "Nghĩa ❤️ Nhung - Lời Mời Cưới",
+    description: "Chúng tôi xin trân trọng kính mời bạn đến chung vui trong ngày trọng đại của mình.",
+    url: 'https://nnwd2025.info',
+    siteName: 'Nghia & Nhung Wedding',
+    images: [
+      {
+        url: '/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Ảnh mời cưới Nghĩa và Nhung',
+      },
+    ],
+    locale: 'vi_VN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Nghĩa ❤️ Nhung - Lời Mời Cưới",
+    description: "Chúng tôi xin trân trọng kính mời bạn đến chung vui trong ngày trọng đại của mình.",
+    images: ['/og.jpg'], // Sử dụng cùng ảnh OG
+  },
   icons: {
     icon: "/favicon/favicon.ico", // Standard favicon, usually 16x16, 32x32
     shortcut: "/favicon/favicon-16x16.png", // Optional shortcut icon

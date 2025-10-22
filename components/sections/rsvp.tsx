@@ -26,7 +26,7 @@ export default function RSVP() {
   const [step, setStep] = useState<Step>("form")
   const [formData, setFormData] = useState({
     name: "",
-    phone: "", // Đã thay email bằng phone
+    phone: "",
     locations: [] as string[],
     message: "",
   })
@@ -71,10 +71,7 @@ export default function RSVP() {
     }
   }
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { id, value } = e.target
-    setFormData((prev) => ({ ...prev, [id]: value }))
-  }
+  // HÀM handleInputChange ĐÃ BỊ LOẠI BỎ
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -195,7 +192,8 @@ export default function RSVP() {
             <Input
               id="name"
               value={formData.name}
-              onChange={handleInputChange}
+              // THAY THẾ handleInputChange
+              onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
               required
               className="border-border bg-background"
               placeholder={'Nhập tên ' + otherAddressing.toLocaleLowerCase()}
@@ -211,7 +209,8 @@ export default function RSVP() {
               id="phone"
               type="tel" // Dùng type="tel" cho mobile
               value={formData.phone}
-              onChange={handleInputChange}
+              // THAY THẾ handleInputChange
+              onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
               className="border-border bg-background"
               placeholder="09xx xxx xxx"
             />
@@ -280,7 +279,8 @@ export default function RSVP() {
             <Textarea
               id="message"
               value={formData.message}
-              onChange={handleInputChange}
+              // THAY THẾ handleInputChange
+              onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
               rows={4}
               className="border-border bg-background"
               placeholder={`Gửi lời chúc của ${otherAddressing} tới ${selfAddressing}...`}
