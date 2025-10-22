@@ -22,7 +22,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: "Nghĩa ❤️ Nhung - Wedding Invitation",
-  description: "Join us in celebrating our special day - November 23, 2025",
+  description: "Join us in celebrating our special day - November 6 & 11, 2025",
   generator: "v0.app",
 }
 

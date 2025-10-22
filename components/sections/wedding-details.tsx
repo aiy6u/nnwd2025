@@ -17,7 +17,7 @@ const FAMILY_ROLES = ["Ông/Bà", "Bố/Mẹ", "Bác", "Cô", "Chú", "Cậu", "
 export default function WeddingDetails() {
   const brideLocationUrl = "https://maps.app.goo.gl/fr9DER8CmdWD3ceWA"
   const groomLocationUrl = "https://maps.app.goo.gl/8kJatofogLNXbWUW8"
-  const daNangLocationUrl = "https://www.google.com/maps/search/Nh%C3%A0+h%C3%A0ng+ti%E1%BB%87c+c%C6%B0%E1%BB%9Bi+%C4%90%C3%A0+N%E1%BA%B5ng/@16.0583095,108.2045548,13z/data=!3m1!4b1?hl=en&entry=ttu"
+  const daNangLocationUrl = "https://maps.app.goo.gl/o7n3bZ5Gs9vvKebs5"
 
   const [guestRole, setGuestRole] = useState<string>("")
   const [showDaNangParty, setShowDaNangParty] = useState(true)
@@ -146,38 +146,40 @@ export default function WeddingDetails() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6 }}
-              className="rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 p-6 shadow-lg md:col-span-2 md:p-8 lg:p-10"
+              className="rounded-2xl bg-gradient-to-r from-violet-200 to-pink-200 p-1 shadow-lg md:col-span-2"
             >
-              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20 md:h-16 md:w-16">
-                <PartyPopper className="h-7 w-7 text-primary md:h-8 md:w-8" />
-              </div>
-              <h3 className="mb-2 font-serif text-xl font-semibold text-foreground md:text-2xl">Tiệc Báo Hỉ Thân Mật</h3>
-              <p className="mb-4 text-xs text-muted-foreground md:text-sm">Intimate Celebration Party</p>
-              <div className="space-y-3 text-sm md:text-base">
-                <div className="flex items-start gap-3">
-                  <Clock className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
-                  <div>
-                    <p className="font-medium text-foreground">Thời gian dự kiến</p>
-                    <p className="text-muted-foreground">Thứ 7, ngày 15 tháng 11, 2025</p>
-                  </div>
+              <div className="rounded-2xl bg-card p-6 md:p-8 lg:p-10">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary/20 md:h-16 md:w-16">
+                  <PartyPopper className="h-7 w-7 text-primary md:h-8 md:w-8" />
                 </div>
-                <div className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground">Nhà Hàng tại Đà Nẵng</p>
-                    <p className="text-muted-foreground italic">Đang được cập nhật</p>
+                <h3 className="mb-2 font-serif text-xl font-semibold text-foreground md:text-2xl">Tiệc Báo Hỉ Thân Mật</h3>
+                <p className="mb-4 text-xs text-muted-foreground md:text-sm">Intimate Celebration Party</p>
+                <div className="space-y-3 text-sm md:text-base">
+                  <div className="flex items-start gap-3">
+                    <Clock className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
+                    <div>
+                      <p className="font-medium text-foreground">Thời gian tổ chức</p>
+                      <p className="text-muted-foreground">Thứ 7, ngày 15 tháng 11, 2025</p>
+                    </div>
                   </div>
+                  <div className="flex items-start gap-3">
+                    <MapPin className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
+                    <div className="flex-1">
+                      <p className="font-medium text-foreground">Nhà hàng MỘC MÂY</p>
+                      <p className="text-muted-foreground">Lô 01 A3-5 Khu Biệt Thự Đảo Xanh - Quận Hải Châu - TP Đà Nẵng</p>
+                    </div>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full mt-2 bg-gradient-to-r from-violet-200 to-pink-200 text-pink-800"
+                    onClick={() => window.open(daNangLocationUrl, "_blank")}
+                  >
+                    <MapPin className="h-3 w-3 mr-2" />
+                    Xem bản đồ
+                    <ExternalLink className="h-3 w-3 ml-2" />
+                  </Button>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="w-full mt-2 bg-transparent"
-                  onClick={() => window.open(daNangLocationUrl, "_blank")}
-                >
-                  <MapPin className="h-3 w-3 mr-2" />
-                  Xem bản đồ Đà Nẵng
-                  <ExternalLink className="h-3 w-3 ml-2" />
-                </Button>
               </div>
             </motion.div>
           )}
