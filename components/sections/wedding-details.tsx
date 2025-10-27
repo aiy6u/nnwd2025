@@ -158,7 +158,7 @@ export default function WeddingDetails() {
                   <div className="flex items-start gap-3">
                     <Clock className="mt-0.5 h-4 w-4 text-primary md:h-5 md:w-5" />
                     <div>
-                      <p className="font-serif font-medium text-foreground">18h00 - Thứ 7, ngày 15 tháng 11, 2025</p>
+                      <p className="font-serif font-medium text-foreground">11h00 - Thứ 7, ngày 15 tháng 11, 2025</p>
                       <p className="text-muted-foreground">Nhằm ngày 26 tháng 9 Âm lịch</p>
                     </div>
                   </div>
