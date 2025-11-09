@@ -19,7 +19,6 @@ export default function WeddingDetails() {
   const groomLocationUrl = "https://maps.app.goo.gl/8kJatofogLNXbWUW8"
   const daNangLocationUrl = "https://maps.app.goo.gl/o7n3bZ5Gs9vvKebs5"
 
-  const [guestRole, setGuestRole] = useState<string>("")
   const [showDaNangParty, setShowDaNangParty] = useState(true)
 
   useEffect(() => {
@@ -29,7 +28,7 @@ export default function WeddingDetails() {
         try {
           const parsedPair: AddressingPair = JSON.parse(storedPair)
           const role = parsedPair.other
-          setGuestRole(role)
+
           // Ẩn tiệc Đà Nẵng nếu khách thuộc nhóm vai vế gia đình
           setShowDaNangParty(!FAMILY_ROLES.includes(role))
         } catch (e) {

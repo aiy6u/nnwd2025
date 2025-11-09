@@ -36,6 +36,7 @@ const ELEGANT_STYLE = "font-script text-primary text-2xl drop-shadow-sm shadow-d
 
 // Giả định thời gian tổ chức: Nhà gái 11:00 AM, Nhà trai 11:00 AM (giờ nhập tiệc)
 const EVENT_GIRL_DATE = new Date("2025-11-06T11:00:00").getTime()
+const EVENT_DN_DATE = new Date("2025-11-15T11:00:00").getTime()
 const EVENT_BOY_DATE = new Date("2025-11-11T11:00:00").getTime()
 
 const calculateTimeLeft = (targetDate: number): TimeLeft => {
@@ -54,34 +55,70 @@ const calculateTimeLeft = (targetDate: number): TimeLeft => {
   }
 }
 
+const FAMILY_ROLES = ["Ông/Bà", "Bố/Mẹ", "Bác", "Cô", "Chú", "Cậu", "Mợ"]
+
 export default function Countdown() {
   const [addressingPair, setAddressingPair] = useState<AddressingPair>({
     self: "Chúng tôi",
     other: "Quý vị",
   })
 
-  const [events, setEvents] = useState<WeddingEvent[]>([
-    {
-      id: "girl",
-      title: "LỄ VU QUY - NHÀ GÁI",
-      date: new Date(EVENT_GIRL_DATE),
-      dateString: "Thứ 5, 06 Tháng 11, 2025",
-      lunarDate: "(17/09 ÂL)",
-      location: "Sầm Sơn, Thanh Hóa",
-      time: "10:00 Sáng",
-      timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
-    },
-    {
-      id: "boy",
-      title: "LỄ THÀNH HÔN - NHÀ TRAI",
-      date: new Date(EVENT_BOY_DATE),
-      dateString: "Thứ 3, 11 Tháng 11, 2025",
-      lunarDate: "(22/09 ÂL)",
-      location: "Tuy An Bắc, Đắk Lắk",
-      time: "10:00 Sáng",
-      timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
-    },
-  ])
+  const _events: WeddingEvent[] = [{
+    id: "boy",
+    title: "LỄ THÀNH HÔN - NHÀ TRAI",
+    date: new Date(EVENT_BOY_DATE),
+    dateString: "Thứ 3, 11 Tháng 11, 2025",
+    lunarDate: "(22/09 ÂL)",
+    location: "Tuy An Bắc, Đắk Lắk",
+    time: "10:00 Sáng",
+    timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+  }];
+
+  const [showDaNangParty, setShowDaNangParty] = useState(true)
+  const [events, setEvents] = useState<WeddingEvent[]>([])
+
+  useEffect(() => {
+    const loadAddressing = () => {
+      const storedPair = localStorage.getItem(ADDRESSING_KEY)
+      if (storedPair) {
+        try {
+          const parsedPair: AddressingPair = JSON.parse(storedPair)
+          const role = parsedPair.other
+
+          // Ẩn tiệc Đà Nẵng nếu khách thuộc nhóm vai vế gia đình
+          setShowDaNangParty(!FAMILY_ROLES.includes(role))
+
+          if (showDaNangParty) {
+            _events.push(
+              {
+                id: "danang",
+                title: "TIỆC BÁO HỈ THÂN MẬT",
+                date: new Date(EVENT_DN_DATE),
+                dateString: "Thứ 7, 15 Tháng 11, 2025",
+                lunarDate: "(26/09 ÂL)",
+                location: "Nhà hàng MỘC MÂY, Đà Nẵng",
+                time: "11:00 Sáng",
+                timeLeft: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+              }
+            );
+          }
+
+          setEvents(_events);
+        } catch (e) {
+          // Mặc định là hiển thị nếu có lỗi
+          setShowDaNangParty(true)
+        }
+      } else {
+        // Mặc định là hiển thị nếu chưa chọn
+        setShowDaNangParty(true)
+      }
+    }
+
+    loadAddressing()
+    window.addEventListener("addressing-updated", loadAddressing)
+    return () => window.removeEventListener("addressing-updated", loadAddressing)
+  }, [])
+
 
   useEffect(() => {
     const loadAddressing = () => {
