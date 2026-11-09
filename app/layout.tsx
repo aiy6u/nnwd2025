@@ -34,7 +34,7 @@ export const metadata: Metadata = {
         url: '/og.jpg',
         width: 1200,
         height: 630,
-        alt: 'Ảnh mời cưới Nghĩa và Nhung',
+        alt: 'Kỷ niệm 1 năm ngày cưới Nghĩa và Nhung',
       },
     ],
     locale: 'vi_VN',

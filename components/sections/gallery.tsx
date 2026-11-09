@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { useIsMobile } from "@/hooks/use-mobile"
 import Image, { ImageProps } from "next/image"
+import { anniversaryPhotos, type PhotoEvent } from "@/lib/anniversary-photos"
 
 interface AddressingPair {
   self: string
@@ -19,82 +20,108 @@ interface Photo {
   alt: string
   width: number
   height: number
+  event: PhotoEvent
 }
 
-const photos: Photo[] = [
+const studioPhotos: Photo[] = [
   {
     url: "/gallery/DSC00327.jpg",
     alt: "Cô dâu chú rể rạng rỡ hạnh phúc trong tà áo dài đỏ truyền thống!",
     width: 600,
     height: 800,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00395.jpg",
     alt: "Cặp đôi ngọt ngào tạo dáng trong studio với chữ Song Hỷ may mắn!",
     width: 800,
     height: 600,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00454.jpg",
     alt: "Anh và Em thật thanh lịch, sang trọng trong trang phục cưới trắng tinh khôi!",
     width: 600,
     height: 800,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00575.jpg",
     alt: "Ảnh cưới toàn thân siêu lãng mạn của đôi uyên ương trong bộ trắng!",
     width: 600,
     height: 800,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00682.jpg",
     alt: "Em ngồi duyên dáng, Anh đứng kề bên trong trang phục cưới trắng tinh khôi!",
     width: 800,
     height: 600,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00687.jpg",
     alt: "Khoảnh khắc cận cảnh tình tứ của Anh vest đen, Em váy trắng!",
     width: 800,
     height: 600,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00714.jpg",
     alt: "Cặp đôi say đắm trong váy cưới trắng và vest trắng đầy tình cảm!",
     width: 800,
     height: 600,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00748.jpg",
     alt: "Ảnh cưới toàn thân lung linh của Em và Anh trong váy áo trắng!",
     width: 600,
     height: 800,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00828.jpg",
     alt: "Cô dâu chú rể với nụ cười hạnh phúc, áo dài đỏ thắm tình!",
     width: 800,
     height: 600,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00855.jpg",
     alt: "Khoảnh khắc cưới cổ điển, sang trọng, tràn đầy yêu thương của hai ta!",
     width: 600,
     height: 800,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00941.jpg",
     alt: "Một bức ảnh cưới độc đáo và đầy nghệ thuật của đôi mình!",
     width: 800,
     height: 600,
+    event: "studio",
   },
   {
     url: "/gallery/DSC00948.jpg",
     alt: "Bức ảnh cưới ấn tượng, ghi lại kỷ niệm đẹp nhất của hai trái tim!",
     width: 800,
     height: 600,
+    event: "studio",
   },
 ]
+
+const EVENT_ORDER: PhotoEvent[] = ["vu-quy", "tan-hon", "bao-hy", "studio"]
+const FILTERS: { id: "all" | PhotoEvent; label: string }[] = [
+  { id: "all", label: "Tất cả" },
+  { id: "vu-quy", label: "Vu Quy 06/11" },
+  { id: "tan-hon", label: "Tân Hôn 11/11" },
+  { id: "bao-hy", label: "Báo Hỷ 15/11" },
+  { id: "studio", label: "Ảnh cưới" },
+]
+
+const allPhotos: Photo[] = [...anniversaryPhotos, ...studioPhotos].sort(
+  (x, y) => EVENT_ORDER.indexOf(x.event) - EVENT_ORDER.indexOf(y.event),
+)
 
 const GalleryThumbnail: React.FC<{ photo: Photo, index: number, onClick: () => void }> = ({ photo, index, onClick }) => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -104,7 +131,7 @@ const GalleryThumbnail: React.FC<{ photo: Photo, index: number, onClick: () => v
       key={index}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: index * 0.1 }}
+      transition={{ delay: Math.min(index, 12) * 0.05 }}
       onClick={onClick}
       className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-muted shadow-lg transition-transform hover:scale-105 md:rounded-2xl"
     >
@@ -138,6 +165,8 @@ export default function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [selfAddressing, setSelfAddressing] = useState("Chúng tôi")
   const [imageLoaded, setImageLoaded] = useState(false)
+  const [filter, setFilter] = useState<"all" | PhotoEvent>("all")
+  const photos = filter === "all" ? allPhotos : allPhotos.filter((p) => p.event === filter)
 
   useEffect(() => {
     const loadAddressing = () => {
@@ -184,13 +213,30 @@ export default function Gallery() {
           <h2 className="font-script text-4xl text-primary md:text-6xl lg:text-7xl">
             Khoảnh Khắc Của {selfAddressing}
           </h2>
-          <p className="font-serif text-xs text-muted-foreground md:text-sm">Our Gallery</p>
+          <p className="font-serif text-xs text-muted-foreground md:text-sm">Một năm nhìn lại, {allPhotos.length} khoảnh khắc</p>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-2">
+          {FILTERS.map((f) => (
+            <button
+              key={f.id}
+              onClick={() => setFilter(f.id)}
+              className={cn(
+                "rounded-full border px-4 py-1.5 font-serif text-xs transition-colors md:text-sm",
+                filter === f.id
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-primary/30 bg-card text-foreground hover:bg-primary/10",
+              )}
+            >
+              {f.label}
+            </button>
+          ))}
         </div>
 
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-6">
           {photos.map((photo, index) => (
             <GalleryThumbnail
-              key={index}
+              key={photo.url as string}
               photo={photo}
               index={index}
               onClick={() => setSelectedImage(index)}

@@ -107,7 +107,7 @@ export default function RSVP() {
 
       toast({
         title: `Cảm ơn ${otherAddressing}`,
-        description: `${selfAddressing} đã nhận được phản hồi của ${otherAddressing}.`,
+        description: `${selfAddressing} đã nhận được lời chúc của ${otherAddressing}.`,
       })
 
       setStep("thankyou")
@@ -145,7 +145,7 @@ export default function RSVP() {
               </svg>
             </motion.div>
             <h2 className="font-script text-5xl text-primary">Cảm Ơn {otherAddressing}!</h2>
-            <p className="font-serif text-2xl text-foreground">Xác nhận thành công!</p>
+            <p className="font-serif text-2xl text-foreground">Đã nhận lời chúc!</p>
             {hasAttendance ? (
               <p className="text-balance font-serif text-base leading-relaxed text-foreground/80">
                 {selfAddressing} đã nhận được xác nhận của {otherAddressing}. Rất mong được gặp {otherAddressing} tại
@@ -174,10 +174,10 @@ export default function RSVP() {
         className="w-full max-w-2xl space-y-12"
       >
         <div className="space-y-4 text-center">
-          <h2 className="font-script text-5xl text-primary">Xác Nhận Tham Dự</h2>
-          <p className="font-serif text-sm text-muted-foreground">RSVP</p>
+          <h2 className="font-script text-5xl text-primary">Gửi Lời Chúc</h2>
+          <p className="font-serif text-sm text-muted-foreground">Kỷ niệm 1 năm ngày cưới</p>
           <p className="text-balance font-serif text-base leading-relaxed text-foreground/80">
-            Vui lòng cho {selfAddressing} biết {otherAddressing} có thể tham dự không
+            Một năm qua cảm ơn {otherAddressing} đã luôn yêu thương. {otherAddressing} có lời nào muốn gửi {selfAddressing} không?
           </p>
         </div>
 
@@ -217,71 +217,16 @@ export default function RSVP() {
             />
           </div>
 
-          <div className="space-y-3">
-            <Label className="font-serif text-foreground">{otherAddressing} sẽ tham dự ở đâu?</Label>
-            <div className="space-y-3 rounded-lg bg-background/50 p-4">
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="nha-gai"
-                  checked={formData.locations.includes("nha-gai")}
-                  onCheckedChange={(checked) => handleLocationChange("nha-gai", checked as boolean)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="nha-gai" className="font-normal leading-none cursor-pointer">
-                    Lễ Vu Quy - Nhà Gái
-                  </Label>
-                  <p className="text-xs text-muted-foreground">Thứ 5, 06/11/2025</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="nha-trai"
-                  checked={formData.locations.includes("nha-trai")}
-                  onCheckedChange={(checked) => handleLocationChange("nha-trai", checked as boolean)}
-                />
-                <div className="space-y-1">
-                  <Label htmlFor="nha-trai" className="font-normal leading-none cursor-pointer">
-                    Lễ Thành Hôn - Nhà Trai
-                  </Label>
-                  <p className="text-xs text-muted-foreground">Thứ 3, 11/11/2025</p>
-                </div>
-              </div>
-
-              {/* Logic ẩn hiện Tiệc Báo Hỉ Đà Nẵng */}
-              {!isFamilyMember && (
-                <div className="flex items-start space-x-3">
-                  <Checkbox
-                    id="da-nang"
-                    checked={formData.locations.includes("da-nang")}
-                    onCheckedChange={(checked) => handleLocationChange("da-nang", checked as boolean)}
-                  />
-                  <div className="space-y-1">
-                    <Label htmlFor="da-nang" className="font-normal leading-none cursor-pointer">
-                      Tiệc Báo Hỉ - Đà Nẵng
-                    </Label>
-                    <p className="text-xs text-muted-foreground">Thứ 7, 15/11/2025</p>
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-4 pt-4 border-t border-border">
-                <p className="text-sm text-muted-foreground italic">
-                  Không chọn địa điểm nào đồng nghĩa với việc {otherAddressing} không thể đến nhưng vẫn gửi lời chúc phúc ❤️
-                </p>
-              </div>
-            </div>
-          </div>
-
           <div className="space-y-2">
             <Label htmlFor="message" className="font-serif text-foreground">
-              Lời nhắn cho cô dâu chú rể
+              Lời chúc của {otherAddressing}
             </Label>
             <Textarea
               id="message"
               value={formData.message}
               onChange={handleInputChange}
-              rows={4}
+              rows={5}
+              required
               className="border-border bg-background"
               placeholder={`Gửi lời chúc của ${otherAddressing} tới ${selfAddressing}...`}
             />
@@ -292,7 +237,7 @@ export default function RSVP() {
             disabled={isSubmitting}
             className="w-full rounded-full bg-primary py-6 font-serif text-lg text-primary-foreground hover:bg-primary/90"
           >
-            {isSubmitting ? "Đang gửi xác nhận..." : "Gửi xác nhận"}
+            {isSubmitting ? "Đang gửi..." : "Gửi lời chúc"}
           </Button>
         </motion.form>
       </motion.div>

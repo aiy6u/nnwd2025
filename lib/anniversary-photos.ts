@@ -1,0 +1,71 @@
+export type PhotoEvent = "studio" | "vu-quy" | "tan-hon" | "bao-hy"
+
+export interface AnniversaryPhoto {
+  url: string
+  alt: string
+  width: number
+  height: number
+  event: PhotoEvent
+}
+
+// Ảnh lọc từ bộ _NhungReviewed, thu về cạnh dài 2000px, đã bỏ EXIF
+export const anniversaryPhotos: AnniversaryPhoto[] = [
+  { url: "/gallery/anniversary/vu-quy-DSC00979.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01023.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01036.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01042.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01051.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01068.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01082.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01097.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 1333, height: 2000, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01108.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 1333, height: 2000, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01152.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 1333, height: 2000, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01180.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01187.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01193.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 1333, height: 2000, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01210.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 1333, height: 2000, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01225.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01230.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01232.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01318.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01327.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01343.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01366.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01398.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 2000, height: 1333, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01418.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 1333, height: 2000, event: "vu-quy" },
+  { url: "/gallery/anniversary/vu-quy-DSC01425.jpg", alt: "Lễ Vu Quy nhà gái, 06/11/2025", width: 1333, height: 2000, event: "vu-quy" },
+  { url: "/gallery/anniversary/tan-hon-KHA03605.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03607.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 2000, height: 1334, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03612.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03639.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03687.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03713.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03758.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03775.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03787.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03792.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03820.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03836.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 2000, height: 1334, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03891.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03910.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA03986.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04041.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04063.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04077.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04124.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04297.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04328.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04450.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 2000, height: 1334, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04459.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 2000, height: 1334, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04557.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 2000, height: 1334, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04571.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1334, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-KHA04573.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 2000, height: 1334, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-24374198875958544801.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1123, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-35001444146169997912.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1123, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/tan-hon-ecf54f546c63e03db972.jpg", alt: "Lễ Tân Hôn nhà trai, 11/11/2025", width: 1123, height: 2000, event: "tan-hon" },
+  { url: "/gallery/anniversary/bao-hy-20251115_123619_456.jpg", alt: "Tiệc Báo Hỷ Đà Nẵng, 15/11/2025", width: 1800, height: 1200, event: "bao-hy" },
+  { url: "/gallery/anniversary/bao-hy-20251115_123821_566.jpg", alt: "Tiệc Báo Hỷ Đà Nẵng, 15/11/2025", width: 1800, height: 1200, event: "bao-hy" },
+  { url: "/gallery/anniversary/bao-hy-20251115_131708_176.jpg", alt: "Tiệc Báo Hỷ Đà Nẵng, 15/11/2025", width: 1800, height: 1200, event: "bao-hy" },
+  { url: "/gallery/anniversary/bao-hy-20251115_131916_023.jpg", alt: "Tiệc Báo Hỷ Đà Nẵng, 15/11/2025", width: 1800, height: 1200, event: "bao-hy" },
+  { url: "/gallery/anniversary/bao-hy-20251115_132243_218.jpg", alt: "Tiệc Báo Hỷ Đà Nẵng, 15/11/2025", width: 1800, height: 1200, event: "bao-hy" },
+]

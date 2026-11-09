@@ -6,6 +6,7 @@ import LoveStory from "./sections/love-story"
 import WeddingDetails from "./sections/wedding-details"
 import Gallery from "./sections/gallery"
 import RSVP from "./sections/rsvp"
+import Video from "./sections/video"
 import Countdown from "./sections/countdown"
 import Messages from "./sections/messages"
 import FloatingHearts from "./floating-hearts"
@@ -37,12 +38,13 @@ export default function WeddingInvitation() {
     { id: "story", component: LoveStory },
     { id: "details", component: WeddingDetails },
     { id: "gallery", component: Gallery },
+    { id: "video", component: Video },
     { id: "rsvp", component: RSVP },
   ]
 
   const sections =
     messages.length >= 10
-      ? [...baseSections.slice(0, 5), { id: "messages", component: Messages }, baseSections[5]]
+      ? [...baseSections.slice(0, 6), { id: "messages", component: Messages }, baseSections[6]]
       : baseSections
 
   const scrollToSection = useCallback((index: number) => {
