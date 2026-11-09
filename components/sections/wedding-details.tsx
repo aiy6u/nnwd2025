@@ -64,7 +64,7 @@ export default function WeddingDetails() {
                   alt={m.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-[1500ms] hover:scale-110"
+                  className="object-cover object-[50%_12%] transition-transform duration-[1500ms] hover:scale-110"
                 />
               </div>
               <div className="space-y-3 p-5">
