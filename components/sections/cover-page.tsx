@@ -10,8 +10,6 @@ interface AddressingPair {
 }
 
 const ADDRESSING_KEY = "wedding-addressing-pair"
-const WEDDING_DAY_DETAIL = "Thứ 3, ngày 11 tháng 11 năm 2025"
-const WEDDING_LUNAR_DATE = "Nhằm ngày 22 tháng 9 âm lịch"
 
 export default function CoverPage() {
     const [addressingSelf, setAddressingSelf] = useState<string>("Chúng tôi")
@@ -74,15 +72,15 @@ export default function CoverPage() {
                     className="space-y-2 md:space-y-3"
                 >
                     <p className="font-serif text-xs uppercase tracking-widest text-muted-foreground md:text-sm">
-                        {addressingSelf} Sắp Kết Hôn
+                        Kỷ niệm 1 năm ngày cưới của {addressingSelf.toLocaleLowerCase("vi-VN")}
                     </p>
-                    {/* Hiển thị Thứ và Ngày Dương */}
+                    {/* Ngày cưới — Ngày kỷ niệm 1 năm */}
                     <p className="font-serif text-xl font-semibold text-foreground md:text-3xl lg:text-4xl">
-                        {WEDDING_DAY_DETAIL}
+                        11.11.2025 — 11.11.2026
                     </p>
-                    {/* Hiển thị Ngày Âm Lịch */}
+                    
                     <p className="font-serif text-base font-medium text-foreground/80 md:text-xl">
-                        {WEDDING_LUNAR_DATE}
+                        Một năm hạnh phúc bên nhau
                     </p>
                 </motion.div>
             </motion.div>

@@ -21,12 +21,12 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Nghĩa ❤️ Nhung - Wedding Invitation",
-  description: "Join us in celebrating our special day - November 6 & 11, 2025",
+  title: "Nghĩa ❤️ Nhung - 1st Wedding Anniversary",
+  description: "Celebrating our 1st wedding anniversary - November 11, 2026",
   generator: "NTNSOFT.com",
   openGraph: {
-    title: "Nghĩa ❤️ Nhung - Lời Mời Cưới",
-    description: "Chúng tôi xin trân trọng kính mời bạn đến chung vui trong ngày trọng đại của mình.",
+    title: "Nghĩa ❤️ Nhung - Kỷ Niệm 1 Năm Ngày Cưới",
+    description: "Tròn 1 năm về chung một nhà - cảm ơn bạn đã luôn đồng hành cùng chúng tôi.",
     url: 'https://nnwd2025.info',
     siteName: 'Nghia & Nhung Wedding',
     images: [
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Nghĩa ❤️ Nhung - Lời Mời Cưới",
-    description: "Chúng tôi xin trân trọng kính mời bạn đến chung vui trong ngày trọng đại của mình.",
+    title: "Nghĩa ❤️ Nhung - Kỷ Niệm 1 Năm Ngày Cưới",
+    description: "Tròn 1 năm về chung một nhà - cảm ơn bạn đã luôn đồng hành cùng chúng tôi.",
     images: ['/og.jpg'], // Sử dụng cùng ảnh OG
   },
   icons: {

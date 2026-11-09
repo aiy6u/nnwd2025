@@ -66,9 +66,15 @@ export default function LoveStory() {
         },
         {
             icon: Gem,
-            title: "Trang Mới",
-            date: "Hiện Tại",
-            description: `Và hiện tại, câu chuyện của ${selfAddressing} càng thêm ý nghĩa với sự góp mặt của ${otherAddressing}.`,
+            title: "Về Chung Một Nhà",
+            date: "Ngày 11/11/2025",
+            description: `${selfAddressing.charAt(0).toLocaleUpperCase("vi-VN") + selfAddressing.slice(1)} chính thức nên duyên vợ chồng trong niềm vui và lời chúc phúc của ${otherAddressing}.`,
+        },
+        {
+            icon: Heart,
+            title: "Kỷ Niệm 1 Năm",
+            date: "Ngày 11/11/2026",
+            description: `Tròn một năm chung nhà, ${selfAddressing} cùng nhau vun đắp tổ ấm và viết tiếp những trang mới thật hạnh phúc.`,
         },
     ]
 
