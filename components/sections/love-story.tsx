@@ -68,24 +68,31 @@ export default function LoveStory() {
             preserveAspectRatio="none"
           >
             <defs>
-              <linearGradient id="loveGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#f9c5d1" />
+              <linearGradient id="loveGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2={height}>
+                <stop offset="0%" stopColor="#ef8fa8" />
                 <stop offset="50%" stopColor="#e88aa2" />
-                <stop offset="100%" stopColor="#d4a24c" />
+                <stop offset="100%" stopColor="#e07a96" />
               </linearGradient>
             </defs>
             <path d={wavePath(timeline.length)} fill="none" stroke="currentColor" className="text-primary/15" strokeWidth={6} vectorEffect="non-scaling-stroke" />
-            <motion.path
+            <clipPath id="loveReveal">
+              <motion.rect
+                x="0"
+                y="0"
+                width="100"
+                initial={{ height: 0 }}
+                animate={{ height }}
+                transition={{ duration: 3.2, ease: "easeInOut", delay: 0.3 }}
+              />
+            </clipPath>
+            <path
               d={wavePath(timeline.length)}
               fill="none"
               stroke="url(#loveGrad)"
               strokeWidth={3}
               strokeLinecap="round"
-              strokeDasharray="1 0"
               vectorEffect="non-scaling-stroke"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 3.2, ease: "easeInOut", delay: 0.3 }}
+              clipPath="url(#loveReveal)"
             />
           </svg>
 

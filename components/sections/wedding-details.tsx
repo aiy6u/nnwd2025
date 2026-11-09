@@ -31,7 +31,7 @@ const MILESTONES = [
     lunar: "26/09 Âm lịch",
     place: "Nhà hàng Mộc Mây, Hải Châu, Đà Nẵng",
     note: "Một buổi tiệc ấm áp bên bạn bè, đồng nghiệp ở Đà Nẵng, nơi những tràng cười và lời chúc làm ngày vui thêm trọn.",
-    photo: "/gallery/anniversary/bao-hy-20251115_131708_176.jpg",
+    photo: "/gallery/anniversary/bao-hy-20251115_123619_456.jpg",
   },
 ]
 
