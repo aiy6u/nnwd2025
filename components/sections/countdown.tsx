@@ -22,8 +22,14 @@ const ELEGANT_STYLE = "font-script text-primary text-2xl drop-shadow-sm shadow-d
 // Ngày cưới: Thứ 3, ngày 11 tháng 11 năm 2025 (Nhằm ngày 22 tháng 9 âm lịch)
 const WEDDING_DATE = new Date("2025-11-11T10:00:00+07:00").getTime()
 
+// Kỷ niệm tròn 1 năm: Thứ 4, ngày 11 tháng 11 năm 2026
+const ANNIVERSARY_DATE = new Date("2026-11-11T10:00:00+07:00").getTime()
+
+// Trước ngày kỷ niệm: đếm ngược tới 11/11/2026. Từ ngày kỷ niệm: đếm thời gian đã bên nhau.
+const isBeforeAnniversary = () => Date.now() < ANNIVERSARY_DATE
+
 const calculateTimeTogether = (): TimeTogether => {
-  const distance = Math.max(0, Date.now() - WEDDING_DATE)
+  const distance = isBeforeAnniversary() ? ANNIVERSARY_DATE - Date.now() : Math.max(0, Date.now() - WEDDING_DATE)
   return {
     days: Math.floor(distance / (1000 * 60 * 60 * 24)),
     hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
@@ -66,6 +72,7 @@ export default function Countdown() {
   ]
 
   const selfAddressing = addressingPair.self.toLocaleLowerCase("vi-VN")
+  const counting = isBeforeAnniversary()
 
   return (
     <div className="flex min-h-full md:min-h-screen flex-col items-center justify-center px-6 py-12">
@@ -75,11 +82,12 @@ export default function Countdown() {
         className="w-full max-w-2xl space-y-12 text-center"
       >
         <div className="space-y-4">
-          <h2 className="font-script text-5xl text-primary">Bên Nhau</h2>
+          <h2 className="font-script text-5xl text-primary">{counting ? "Đếm Ngược" : "Bên Nhau"}</h2>
           <p className="font-serif text-lg text-muted-foreground">
-            Kể từ ngày <span className="text-foreground font-semibold">{selfAddressing}</span>
+            {counting ? "Cho đến ngày " : "Kể từ ngày "}
+            <span className="text-foreground font-semibold">{selfAddressing}</span>
             <br />
-            <span className={ELEGANT_STYLE}>Chính thức về chung một nhà ^^</span>
+            <span className={ELEGANT_STYLE}>{counting ? "Tròn 1 năm về chung một nhà ^^" : "Chính thức về chung một nhà ^^"}</span>
           </p>
         </div>
 
@@ -95,12 +103,12 @@ export default function Countdown() {
             <div className="flex items-center justify-center gap-2">
               <Calendar className="h-4 w-4 text-foreground" />
               <p className="text-sm font-semibold text-foreground md:text-base">
-                <span className="font-extrabold">Thứ 3, 11 Tháng 11, 2025</span> (22/09 ÂL)
+                <span className="font-extrabold">Thứ 4, 11 Tháng 11, 2026</span>
               </p>
             </div>
             <div className="flex items-center justify-center gap-2 text-muted-foreground">
               <MapPin className="h-4 w-4" />
-              <p className="text-sm">Tuy An Bắc, Đắk Lắk</p>
+              <p className="text-sm">Ngày cưới: Thứ 3, 11/11/2025 (22/09 ÂL)</p>
             </div>
           </div>
 

@@ -72,15 +72,14 @@ export default function CoverPage() {
                     className="space-y-2 md:space-y-3"
                 >
                     <p className="font-serif text-xs uppercase tracking-widest text-muted-foreground md:text-sm">
-                        Kỷ niệm 1 năm ngày cưới của {addressingSelf.toLocaleLowerCase("vi-VN")}
+                        {addressingSelf} sắp tròn 1 năm ngày cưới
                     </p>
                     {/* Ngày cưới — Ngày kỷ niệm 1 năm */}
                     <p className="font-serif text-xl font-semibold text-foreground md:text-3xl lg:text-4xl">
                         11.11.2025 — 11.11.2026
                     </p>
-                    
                     <p className="font-serif text-base font-medium text-foreground/80 md:text-xl">
-                        Một năm hạnh phúc bên nhau
+                        Thứ 4, ngày 11 tháng 11 năm 2026
                     </p>
                 </motion.div>
             </motion.div>
