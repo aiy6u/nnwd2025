@@ -1,13 +1,17 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import Lightbox from "yet-another-react-lightbox"
+import Zoom from "yet-another-react-lightbox/plugins/zoom"
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails"
+import Slideshow from "yet-another-react-lightbox/plugins/slideshow"
+import Counter from "yet-another-react-lightbox/plugins/counter"
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen"
+import { Expand, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useIsMobile } from "@/hooks/use-mobile"
-import Image, { ImageProps } from "next/image"
-import { anniversaryPhotos, type PhotoEvent } from "@/lib/anniversary-photos"
+import { anniversaryPhotos, type AnniversaryPhoto, type PhotoEvent } from "@/lib/anniversary-photos"
 
 interface AddressingPair {
   self: string
@@ -15,315 +19,171 @@ interface AddressingPair {
 }
 const ADDRESSING_KEY = "wedding-addressing-pair"
 
-interface Photo {
-  url: ImageProps['src']
-  alt: string
-  width: number
-  height: number
-  event: PhotoEvent
-}
-
-const studioPhotos: Photo[] = [
-  {
-    url: "/gallery/DSC00327.jpg",
-    alt: "Cô dâu chú rể rạng rỡ hạnh phúc trong tà áo dài đỏ truyền thống!",
-    width: 600,
-    height: 800,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00395.jpg",
-    alt: "Cặp đôi ngọt ngào tạo dáng trong studio với chữ Song Hỷ may mắn!",
-    width: 800,
-    height: 600,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00454.jpg",
-    alt: "Anh và Em thật thanh lịch, sang trọng trong trang phục cưới trắng tinh khôi!",
-    width: 600,
-    height: 800,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00575.jpg",
-    alt: "Ảnh cưới toàn thân siêu lãng mạn của đôi uyên ương trong bộ trắng!",
-    width: 600,
-    height: 800,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00682.jpg",
-    alt: "Em ngồi duyên dáng, Anh đứng kề bên trong trang phục cưới trắng tinh khôi!",
-    width: 800,
-    height: 600,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00687.jpg",
-    alt: "Khoảnh khắc cận cảnh tình tứ của Anh vest đen, Em váy trắng!",
-    width: 800,
-    height: 600,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00714.jpg",
-    alt: "Cặp đôi say đắm trong váy cưới trắng và vest trắng đầy tình cảm!",
-    width: 800,
-    height: 600,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00748.jpg",
-    alt: "Ảnh cưới toàn thân lung linh của Em và Anh trong váy áo trắng!",
-    width: 600,
-    height: 800,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00828.jpg",
-    alt: "Cô dâu chú rể với nụ cười hạnh phúc, áo dài đỏ thắm tình!",
-    width: 800,
-    height: 600,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00855.jpg",
-    alt: "Khoảnh khắc cưới cổ điển, sang trọng, tràn đầy yêu thương của hai ta!",
-    width: 600,
-    height: 800,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00941.jpg",
-    alt: "Một bức ảnh cưới độc đáo và đầy nghệ thuật của đôi mình!",
-    width: 800,
-    height: 600,
-    event: "studio",
-  },
-  {
-    url: "/gallery/DSC00948.jpg",
-    alt: "Bức ảnh cưới ấn tượng, ghi lại kỷ niệm đẹp nhất của hai trái tim!",
-    width: 800,
-    height: 600,
-    event: "studio",
-  },
+// Ảnh studio trước cưới (đã bỏ 2 tấm gần trùng DSC00395, DSC00948)
+const studioPhotos: AnniversaryPhoto[] = [
+  { url: "/gallery/DSC00327.jpg", alt: "Ảnh cưới studio, vest đen váy trắng", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00454.jpg", alt: "Ảnh cưới studio, cận cảnh hai người", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00575.jpg", alt: "Ảnh cưới studio, ánh sáng huyền ảo", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00682.jpg", alt: "Ảnh cưới studio, vest trắng", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00687.jpg", alt: "Ảnh cưới studio, khung cảnh cổ điển", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00714.jpg", alt: "Ảnh cưới studio, phòng tân cổ điển", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00748.jpg", alt: "Ảnh cưới studio, Em ngồi Anh đứng", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00828.jpg", alt: "Ảnh cưới studio, áo dài đỏ", width: 2000, height: 1333, event: "studio" },
+  { url: "/gallery/DSC00855.jpg", alt: "Ảnh cưới studio, áo dài đỏ và chữ Hỷ", width: 1333, height: 2000, event: "studio" },
+  { url: "/gallery/DSC00941.jpg", alt: "Ảnh cưới studio, áo dài đỏ và quạt", width: 1333, height: 2000, event: "studio" },
 ]
 
-const EVENT_ORDER: PhotoEvent[] = ["vu-quy", "tan-hon", "bao-hy", "studio"]
+const EVENT_ORDER: PhotoEvent[] = ["studio", "vu-quy", "tan-hon", "bao-hy"]
 const FILTERS: { id: "all" | PhotoEvent; label: string }[] = [
   { id: "all", label: "Tất cả" },
-  { id: "vu-quy", label: "Vu Quy 06/11" },
-  { id: "tan-hon", label: "Tân Hôn 11/11" },
-  { id: "bao-hy", label: "Báo Hỷ 15/11" },
   { id: "studio", label: "Ảnh cưới" },
+  { id: "vu-quy", label: "Vu Quy 06.11" },
+  { id: "tan-hon", label: "Tân Hôn 11.11" },
+  { id: "bao-hy", label: "Báo Hỷ 15.11" },
 ]
+const EVENT_LABEL: Record<PhotoEvent, string> = {
+  studio: "Ảnh cưới",
+  "vu-quy": "Lễ Vu Quy",
+  "tan-hon": "Lễ Tân Hôn",
+  "bao-hy": "Tiệc Báo Hỷ",
+}
 
-const allPhotos: Photo[] = [...anniversaryPhotos, ...studioPhotos].sort(
+const allPhotos = [...studioPhotos, ...anniversaryPhotos].sort(
   (x, y) => EVENT_ORDER.indexOf(x.event) - EVENT_ORDER.indexOf(y.event),
 )
 
-const GalleryThumbnail: React.FC<{ photo: Photo, index: number, onClick: () => void }> = ({ photo, index, onClick }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-
+function Tile({ photo, index, onOpen }: { photo: AnniversaryPhoto; index: number; onOpen: () => void }) {
+  const [loaded, setLoaded] = useState(false)
   return (
     <motion.button
-      key={index}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: Math.min(index, 12) * 0.05 }}
-      onClick={onClick}
-      className="group relative aspect-[3/4] overflow-hidden rounded-xl bg-muted shadow-lg transition-transform hover:scale-105 md:rounded-2xl"
+      layout
+      initial={{ opacity: 0, y: 40, scale: 0.92, rotate: index % 2 ? 1.5 : -1.5 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+      viewport={{ once: true, margin: "0px 0px -40px 0px" }}
+      exit={{ opacity: 0, scale: 0.85 }}
+      transition={{ type: "spring", stiffness: 120, damping: 18, delay: (index % 4) * 0.06 }}
+      onClick={onOpen}
+      className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-2xl bg-muted shadow-md ring-1 ring-primary/10 md:mb-4"
+      style={{ aspectRatio: `${photo.width} / ${photo.height}` }}
     >
-      <div
-        className={cn(
-          "absolute inset-0 skeleton transition-opacity duration-500",
-          isLoaded ? "opacity-0" : "opacity-100"
-        )}
-      />
+      <div className={cn("absolute inset-0 skeleton transition-opacity duration-700", loaded ? "opacity-0" : "opacity-100")} />
       <Image
         src={photo.url}
         alt={photo.alt}
-        width={photo.width}
-        height={photo.height}
+        fill
         sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
         className={cn(
-          "h-full w-full object-cover absolute inset-0 transition-opacity duration-500",
-          isLoaded ? "opacity-100" : "opacity-0"
+          "object-cover transition-all duration-[1200ms] ease-out group-hover:scale-110",
+          loaded ? "opacity-100 blur-0" : "opacity-0 blur-md",
         )}
         loading="lazy"
-        onLoad={() => setIsLoaded(true)}
-        onError={() => setIsLoaded(true)}
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
       />
-      <div className="absolute inset-0 bg-primary/0 transition-colors group-hover:bg-primary/10" />
+      {/* Lớp phủ khi rê chuột */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      {/* Vệt sáng lướt qua */}
+      <div className="pointer-events-none absolute inset-y-0 -left-full w-1/2 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-all duration-1000 group-hover:left-[150%]" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 flex translate-y-4 items-center justify-between p-3 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+        <span className="font-serif text-sm italic text-white drop-shadow">{EVENT_LABEL[photo.event]}</span>
+        <Expand className="h-4 w-4 text-white" />
+      </div>
     </motion.button>
   )
 }
 
 export default function Gallery() {
-  const isMobile = useIsMobile()
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
   const [selfAddressing, setSelfAddressing] = useState("Chúng tôi")
-  const [imageLoaded, setImageLoaded] = useState(false)
   const [filter, setFilter] = useState<"all" | PhotoEvent>("all")
-  const photos = filter === "all" ? allPhotos : allPhotos.filter((p) => p.event === filter)
+  const [openIndex, setOpenIndex] = useState(-1)
 
   useEffect(() => {
-    const loadAddressing = () => {
-      const storedPair = localStorage.getItem(ADDRESSING_KEY)
-      if (storedPair) {
-        try {
-          const parsedPair: AddressingPair = JSON.parse(storedPair)
-          if (parsedPair.self) {
-            setSelfAddressing(parsedPair.self)
-          }
-        } catch (e) { /* handle error */ }
-      }
+    const load = () => {
+      try {
+        const pair: AddressingPair = JSON.parse(localStorage.getItem(ADDRESSING_KEY) || "{}")
+        if (pair.self) setSelfAddressing(pair.self)
+      } catch (e) {}
     }
-
-    loadAddressing()
-    window.addEventListener("addressing-updated", loadAddressing)
-
-    return () => window.removeEventListener("addressing-updated", loadAddressing)
+    load()
+    window.addEventListener("addressing-updated", load)
+    return () => window.removeEventListener("addressing-updated", load)
   }, [])
 
-  const navigate = (direction: number) => {
-    if (selectedImage === null) return
-    const newIndex = (selectedImage + direction + photos.length) % photos.length
-    setSelectedImage(newIndex)
-    setImageLoaded(false)
-  }
-
-  const currentPhoto = selectedImage !== null ? photos[selectedImage] : null
-
-  const closeGallery = () => {
-    setSelectedImage(null)
-    setImageLoaded(false)
-  }
+  const photos = useMemo(() => (filter === "all" ? allPhotos : allPhotos.filter((p) => p.event === filter)), [filter])
+  const slides = useMemo(
+    () => photos.map((p) => ({ src: p.url as string, alt: p.alt, width: p.width, height: p.height, description: p.alt })),
+    [photos],
+  )
 
   return (
-    <div className="flex min-h-full md:min-h-screen flex-col items-center justify-center px-6 py-20 md:px-12">
-
+    <div className="relative flex min-h-full flex-col items-center px-4 py-20 md:min-h-screen md:px-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={cn("w-full max-w-6xl space-y-12", selectedImage !== null && isMobile ? "hidden" : "")}
+        className="w-full max-w-6xl space-y-10"
       >
-        <div className="space-y-4 text-center">
-          <h2 className="font-script text-4xl text-primary md:text-6xl lg:text-7xl">
-            Khoảnh Khắc Của {selfAddressing}
-          </h2>
-          <p className="font-serif text-xs text-muted-foreground md:text-sm">Một năm nhìn lại, {allPhotos.length} khoảnh khắc</p>
+        <div className="space-y-3 text-center">
+          <motion.div
+            initial={{ scale: 0, rotate: -30 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", delay: 0.2 }}
+            className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-primary/15"
+          >
+            <Sparkles className="h-5 w-5 text-primary" />
+          </motion.div>
+          <h2 className="font-script text-5xl text-primary md:text-7xl">Khoảnh Khắc Của {selfAddressing}</h2>
+          <p className="font-serif text-base italic text-muted-foreground md:text-lg">
+            {allPhotos.length} khung hình, một năm thương nhớ
+          </p>
         </div>
 
+        {/* Bộ lọc, viên chọn trượt mượt giữa các mục */}
         <div className="flex flex-wrap justify-center gap-2">
           {FILTERS.map((f) => (
             <button
               key={f.id}
               onClick={() => setFilter(f.id)}
               className={cn(
-                "rounded-full border px-4 py-1.5 font-serif text-xs transition-colors md:text-sm",
-                filter === f.id
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-primary/30 bg-card text-foreground hover:bg-primary/10",
+                "relative rounded-full px-4 py-1.5 font-serif text-sm transition-colors md:text-base",
+                filter === f.id ? "text-primary-foreground" : "text-foreground hover:text-primary",
               )}
             >
-              {f.label}
+              {filter === f.id && (
+                <motion.span
+                  layoutId="gallery-filter-pill"
+                  className="absolute inset-0 rounded-full bg-primary shadow-md"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="relative">{f.label}</span>
             </button>
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4 lg:gap-6">
-          {photos.map((photo, index) => (
-            <GalleryThumbnail
-              key={photo.url as string}
-              photo={photo}
-              index={index}
-              onClick={() => setSelectedImage(index)}
-            />
-          ))}
+        {/* Lưới masonry */}
+        <div className="columns-2 gap-3 md:columns-3 md:gap-4 lg:columns-4">
+          <AnimatePresence mode="popLayout">
+            {photos.map((photo, index) => (
+              <Tile key={photo.url as string} photo={photo} index={index} onOpen={() => setOpenIndex(index)} />
+            ))}
+          </AnimatePresence>
         </div>
       </motion.div>
 
-      <AnimatePresence>
-        {selectedImage !== null && currentPhoto && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/95 p-4 md:p-8"
-            onClick={closeGallery}
-          >
-            <motion.div
-              key={selectedImage}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              className="relative w-full h-full max-h-[85vh] max-w-full overflow-hidden flex items-center justify-center md:max-h-[90vh]"
-              onClick={(e) => { e.stopPropagation(); closeGallery(); }}
-            >
-              <div
-                className={cn(
-                  "absolute inset-0 flex items-center justify-center rounded-xl md:rounded-2xl transition-opacity duration-300 p-2",
-                  imageLoaded ? "opacity-0" : "opacity-100",
-                )}
-              >
-                <div
-                  className="w-3/6 h-full rounded-xl md:rounded-2xl skeleton content-center justify-items-center"
-                  style={{
-                    aspectRatio: `${currentPhoto.width} / ${currentPhoto.height}`,
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                  }}
-                  onClick={(e) => { e.stopPropagation(); }}
-                >
-                  <Image className="animate-bounce" width={256} height={256} src={'/tiger_hi.png'} alt={"1998 hihi"} priority={true} />
-                </div>
-              </div>
-
-              <Image
-                src={currentPhoto.url}
-                className={cn(
-                  "rounded-xl md:rounded-2xl object-contain transition-opacity duration-300",
-                  imageLoaded ? "opacity-100" : "opacity-0",
-                  "max-w-full max-h-full w-auto h-auto"
-                )}
-                alt={currentPhoto.alt}
-                width={currentPhoto.width}
-                height={currentPhoto.height}
-                priority={true}
-                onClick={(e) => { e.stopPropagation(); }}
-                onLoad={() => setImageLoaded(true)}
-                onError={() => setImageLoaded(true)}
-              />
-            </motion.div>
-
-            <Button
-              size="icon"
-              variant="ghost"
-              className="absolute left-4 text-background hover:bg-background/10 md:left-8 md:h-16 md:w-16 border border-pink-800 rounded-full animate-pulse bg-pink-500/50 z-10"
-              onClick={(e) => {
-                e.stopPropagation()
-                navigate(-1)
-              }}
-            >
-              <ChevronLeft className="h-8 w-8 md:h-12 md:w-12" />
-            </Button>
-
-            <Button
-              size="icon"
-              variant="ghost"
-              className="absolute right-4 text-background hover:bg-background/10 md:right-8 md:h-16 md:w-16 border border-pink-800 rounded-full animate-pulse bg-pink-500/50 z-10"
-              onClick={(e) => {
-                e.stopPropagation()
-                navigate(1)
-              }}
-            >
-              <ChevronRight className="h-8 w-8 md:h-12 md:w-12" />
-            </Button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox
+        open={openIndex >= 0}
+        index={openIndex}
+        close={() => setOpenIndex(-1)}
+        slides={slides}
+        plugins={[Zoom, Thumbnails, Slideshow, Counter, Fullscreen]}
+        animation={{ fade: 400, swipe: 450 }}
+        carousel={{ finite: false, preload: 2 }}
+        thumbnails={{ border: 0, borderRadius: 8, gap: 8, width: 90, height: 64, vignette: true }}
+        slideshow={{ delay: 3500 }}
+        zoom={{ maxZoomPixelRatio: 3 }}
+        counter={{ container: { style: { top: "unset", bottom: 0 } } }}
+        styles={{ container: { backgroundColor: "rgba(20, 8, 12, 0.94)", backdropFilter: "blur(8px)" } }}
+      />
     </div>
   )
 }

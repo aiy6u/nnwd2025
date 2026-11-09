@@ -1,88 +1,138 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
 import { Heart } from "lucide-react"
 
 interface AddressingPair {
-    self: string
-    other: string
+  self: string
+  other: string
 }
-
 const ADDRESSING_KEY = "wedding-addressing-pair"
 
+// Ảnh nền đổi chậm, hiệu ứng Ken Burns
+const BACKDROPS = [
+  "/gallery/DSC00682.jpg",
+  "/gallery/anniversary/tan-hon-KHA04124.jpg",
+  "/gallery/DSC00575.jpg",
+  "/gallery/anniversary/tan-hon-KHA04063.jpg",
+]
+
+function Letters({ text, delay, className }: { text: string; delay: number; className?: string }) {
+  return (
+    <span className={className} aria-label={text}>
+      {Array.from(text).map((ch, i) => (
+        <motion.span
+          key={i}
+          aria-hidden
+          className="inline-block"
+          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: delay + i * 0.09, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {ch}
+        </motion.span>
+      ))}
+    </span>
+  )
+}
+
 export default function CoverPage() {
-    const [addressingSelf, setAddressingSelf] = useState<string>("Chúng tôi")
+  const [self, setSelf] = useState("Chúng tôi")
+  const [bg, setBg] = useState(0)
 
-    useEffect(() => {
-        const loadAddressing = () => {
-            const storedPair = localStorage.getItem(ADDRESSING_KEY)
-            if (storedPair) {
-                try {
-                    const parsedPair: AddressingPair = JSON.parse(storedPair)
-                    if (parsedPair.self) {
-                        setAddressingSelf(parsedPair.self)
-                    }
-                } catch (e) {
-                }
-            }
-        }
+  useEffect(() => {
+    const load = () => {
+      try {
+        const p: AddressingPair = JSON.parse(localStorage.getItem(ADDRESSING_KEY) || "{}")
+        if (p.self) setSelf(p.self)
+      } catch (e) {}
+    }
+    load()
+    window.addEventListener("addressing-updated", load)
+    const t = setInterval(() => setBg((b) => (b + 1) % BACKDROPS.length), 6500)
+    return () => {
+      clearInterval(t)
+      window.removeEventListener("addressing-updated", load)
+    }
+  }, [])
 
-        loadAddressing()
+  return (
+    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center md:px-12">
+      {/* Ảnh nền */}
+      <div className="absolute inset-0 bg-gradient-to-br from-rose-300 via-rose-400 to-amber-200">
+        <AnimatePresence>
+          <motion.div
+            key={bg}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.15 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 1.8 }, scale: { duration: 8, ease: "linear" } }}
+          >
+            <Image src={BACKDROPS[bg]} alt="" fill priority={bg === 0} sizes="100vw" className="object-cover object-[50%_30%]" />
+          </motion.div>
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/30 to-black/65" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.45)_100%)]" />
+      </div>
 
-        window.addEventListener("addressing-updated", loadAddressing)
-        return () => window.removeEventListener("addressing-updated", loadAddressing)
-    }, [])
+      {/* Hạt sáng bay lên */}
+      {Array.from({ length: 18 }).map((_, i) => (
+        <motion.span
+          key={i}
+          className="pointer-events-none absolute h-1.5 w-1.5 rounded-full bg-amber-100/80 shadow-[0_0_8px_2px_rgba(255,236,179,0.7)]"
+          style={{ left: `${(i * 53) % 100}%`, bottom: -10 }}
+          animate={{ y: [0, -900], opacity: [0, 1, 0] }}
+          transition={{ duration: 7 + (i % 5), repeat: Infinity, delay: i * 0.6, ease: "easeOut" }}
+        />
+      ))}
 
-    return (
-        <div className="flex min-h-full md:min-h-screen flex-col items-center justify-center px-6 text-center md:px-12">
-            <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.2 }}
-                className="space-y-8 md:space-y-12"
-            >
-                <motion.div
-                    animate={{ rotate: [0, 5, -5, 0] }}
-                    transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-                    className="mx-auto"
-                >
-                    <Heart className="h-12 w-12 fill-primary text-primary md:h-20 md:w-20" />
-                </motion.div>
+      <div className="relative z-10 space-y-7 md:space-y-10">
+        <motion.p
+          initial={{ opacity: 0, letterSpacing: "0.1em" }}
+          animate={{ opacity: 1, letterSpacing: "0.45em" }}
+          transition={{ duration: 1.6, delay: 0.2 }}
+          className="font-sans text-[11px] uppercase text-white/85 md:text-sm"
+        >
+          Kỷ niệm một năm ngày cưới
+        </motion.p>
 
-                <div className="space-y-4 md:space-y-6">
-                    <h1 className="font-script text-5xl text-primary sm:text-6xl md:text-8xl lg:text-9xl">Nghĩa</h1>
-                    <div className="flex items-center justify-center gap-4 md:gap-8">
-                        <div className="h-px w-12 bg-primary/30 md:w-24" />
-                        <Heart className="h-6 w-6 fill-primary text-primary md:h-8 md:w-8" />
-                        <div className="h-px w-12 bg-primary/30 md:w-24" />
-                    </div>
-                    <h1 className="font-script text-5xl text-primary sm:text-6xl md:text-8xl lg:text-9xl">Nhung</h1>
-                </div>
-
-                <div className="space-y-2 text-foreground/80">
-                    <p className="font-serif text-base md:text-xl lg:text-2xl">Nguyễn Trọng Nghĩa</p>
-                    <p className="font-serif text-base md:text-xl lg:text-2xl">Văn Thị Nhung</p>
-                </div>
-
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
-                    className="space-y-2 md:space-y-3"
-                >
-                    <p className="font-serif text-xs uppercase tracking-widest text-muted-foreground md:text-sm">
-                        {addressingSelf} sắp tròn 1 năm ngày cưới
-                    </p>
-                    {/* Ngày cưới — Ngày kỷ niệm 1 năm */}
-                    <p className="font-serif text-xl font-semibold text-foreground md:text-3xl lg:text-4xl">
-                        11.11.2025 — 11.11.2026
-                    </p>
-                    <p className="font-serif text-base font-medium text-foreground/80 md:text-xl">
-                        Thứ 4, ngày 11 tháng 11 năm 2026
-                    </p>
-                </motion.div>
-            </motion.div>
+        <div className="space-y-1 text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+          <h1 className="font-script text-7xl sm:text-8xl md:text-9xl">
+            <Letters text="Nghĩa" delay={0.6} />
+          </h1>
+          <motion.div
+            initial={{ scale: 0, rotate: -45 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", delay: 1.3, stiffness: 160 }}
+            className="flex items-center justify-center gap-4"
+          >
+            <span className="h-px w-14 bg-gradient-to-r from-transparent to-amber-200 md:w-28" />
+            <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1.4, repeat: Infinity }}>
+              <Heart className="h-7 w-7 fill-rose-400 text-rose-300 md:h-9 md:w-9" />
+            </motion.span>
+            <span className="h-px w-14 bg-gradient-to-l from-transparent to-amber-200 md:w-28" />
+          </motion.div>
+          <h1 className="font-script text-7xl sm:text-8xl md:text-9xl">
+            <Letters text="Nhung" delay={1.5} />
+          </h1>
         </div>
-    )
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.3, duration: 1 }}
+          className="space-y-3"
+        >
+          <p className="text-shimmer font-serif text-3xl font-bold tracking-wide md:text-5xl">11 · 11 · 2026</p>
+          <p className="font-serif text-lg italic text-white/90 md:text-2xl">
+            {self} tròn một năm về chung một nhà
+          </p>
+          <p className="font-sans text-xs tracking-[0.3em] text-white/70 md:text-sm">11.11.2025 — 11.11.2026</p>
+        </motion.div>
+      </div>
+    </div>
+  )
 }

@@ -1,22 +1,34 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Great_Vibes, Playfair_Display } from "next/font/google"
-import { GeistSans } from "geist/font/sans"
+import { Imperial_Script, Cormorant_Garamond, Be_Vietnam_Pro } from "next/font/google"
 import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
+import "yet-another-react-lightbox/styles.css"
+import "yet-another-react-lightbox/plugins/thumbnails.css"
+import "yet-another-react-lightbox/plugins/counter.css"
 import "./globals.css"
 import { Suspense } from "react"
 
-const greatVibes = Great_Vibes({
+// Ba font đều có bộ ký tự tiếng Việt đầy đủ dấu
+const scriptFont = Imperial_Script({
   weight: "400",
-  subsets: ["latin"],
-  variable: "--font-great-vibes",
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-script-vn",
   display: "swap",
 })
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
+const serifFont = Cormorant_Garamond({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-serif-vn",
+  display: "swap",
+})
+
+const sansFont = Be_Vietnam_Pro({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-sans-vn",
   display: "swap",
 })
 
@@ -86,9 +98,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <body
-        className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${greatVibes.variable} ${playfair.variable}`}
+        className={`font-sans ${GeistMono.variable} ${scriptFont.variable} ${serifFont.variable} ${sansFont.variable}`}
       >
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />

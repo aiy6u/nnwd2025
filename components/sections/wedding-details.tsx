@@ -8,29 +8,29 @@ import Image from "next/image"
 const MILESTONES = [
   {
     icon: Calendar,
-    title: "Lễ Vu Quy - Nhà Gái",
+    title: "Lễ Vu Quy",
     date: "Thứ 5, 06/11/2025",
     lunar: "17/09 Âm lịch",
     place: "Nhà hàng Sơn Hà, Sầm Sơn, Thanh Hóa",
-    note: "Ngày Em rời vòng tay bố mẹ, theo Anh về một nhà.",
+    note: "Em khoác áo cưới, khẽ chào bố mẹ rồi nắm tay Anh bước ra từ mái nhà thân thương. Những giọt nước mắt hôm ấy là hạnh phúc.",
     photo: "/gallery/anniversary/vu-quy-DSC01042.jpg",
   },
   {
     icon: Heart,
-    title: "Lễ Tân Hôn - Nhà Trai",
+    title: "Lễ Tân Hôn",
     date: "Thứ 3, 11/11/2025",
     lunar: "22/09 Âm lịch",
     place: "Nhà hàng 464, Tuy An Bắc, Đắk Lắk",
-    note: "Ngày hai ta chính thức thành vợ thành chồng.",
+    note: "Trước gia tiên và họ hàng hai bên, hai ta chính thức nên duyên vợ chồng. Từ đây, nhà mình có thêm một người để thương.",
     photo: "/gallery/anniversary/tan-hon-KHA04124.jpg",
   },
   {
     icon: PartyPopper,
-    title: "Tiệc Báo Hỷ - Đà Nẵng",
+    title: "Tiệc Báo Hỷ",
     date: "Thứ 7, 15/11/2025",
     lunar: "26/09 Âm lịch",
     place: "Nhà hàng Mộc Mây, Hải Châu, Đà Nẵng",
-    note: "Chung vui cùng bạn bè, đồng nghiệp thân thương.",
+    note: "Một buổi tiệc ấm áp bên bạn bè, đồng nghiệp ở Đà Nẵng, nơi những tràng cười và lời chúc làm ngày vui thêm trọn.",
     photo: "/gallery/anniversary/bao-hy-20251115_131708_176.jpg",
   },
 ]
@@ -44,8 +44,8 @@ export default function WeddingDetails() {
         className="w-full max-w-5xl space-y-12"
       >
         <div className="space-y-4 text-center">
-          <h2 className="font-script text-4xl text-primary md:text-6xl lg:text-7xl">Một Năm Nhìn Lại</h2>
-          <p className="font-serif text-xs text-muted-foreground md:text-sm">Những ngày chung vui tháng 11 năm 2025</p>
+          <h2 className="font-script text-4xl text-primary md:text-6xl lg:text-7xl">Những Mốc Son Ngày Cưới</h2>
+          <p className="mx-auto max-w-xl font-serif text-base italic text-muted-foreground md:text-lg">Tháng Mười Một năm ấy, ba ngày vui nối nhau thành một chuyện tình trọn vẹn</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-3">
@@ -57,13 +57,14 @@ export default function WeddingDetails() {
               transition={{ delay: 0.2 + i * 0.15 }}
               className="overflow-hidden rounded-2xl bg-card shadow-lg"
             >
-              <div className="relative aspect-[4/3] w-full bg-muted">
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
+                <span className="absolute left-3 top-3 z-10 rounded-full bg-white/85 px-3 py-1 font-serif text-xs font-semibold text-primary shadow">Mốc {i + 1}</span>
                 <Image
                   src={m.photo}
                   alt={m.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-[1500ms] hover:scale-110"
                 />
               </div>
               <div className="space-y-3 p-5">
