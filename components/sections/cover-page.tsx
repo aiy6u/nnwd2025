@@ -13,6 +13,7 @@ const ADDRESSING_KEY = "wedding-addressing-pair"
 
 // Ảnh nền đổi chậm, hiệu ứng Ken Burns
 const BACKDROPS = [
+  "/gallery/anniversary/tan-hon-KHA03792.jpg",
   "/gallery/DSC00682.jpg",
   "/gallery/anniversary/tan-hon-KHA04124.jpg",
   "/gallery/DSC00575.jpg",
